@@ -3,7 +3,7 @@ require "mp-ru"
 require "fmt"
 fmt.dash = true
 fmt.quotes = true
-loadmod "fading"
+-- loadmod "fading"
 -- mp.errhints = false
 game.dsc = [[Простая игра написанная специально для ЗОК-2019.]]
 
@@ -353,7 +353,7 @@ Verb {
 
 function start(load)
 	if not load then
---		fading.set {'fadeblack', max = 64, delay = 25 };
+----		fading.set {'fadeblack', max = 64, delay = 25 };
 		move(pl, 'intro')
 	end
 end
