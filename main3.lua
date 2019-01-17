@@ -264,8 +264,14 @@ dlg {
 }
 
 obj {
-	-"мобильный телефон,телефон,мобильник,смартфон";
+	function(s)
+		pr (-"мобильный телефон,телефон,мобильник,смартфон");
+		if s.flash then
+			pr "|фонарик,фонарь"
+		end
+	end;
 	nam = "телефон";
+	flash = false;
 	compass = false;
 	['before_Drop,Insert'] = function(s, w)
 		if s.compass and w ~= pl then
@@ -274,7 +280,38 @@ obj {
 		end
 		return false
 	end;
+	["before_Burn,Light"] = function(s)
+		s.flash = true
+		if s:has 'light' then
+			p [[Фонарик в телефоне и так включён.]]
+			return
+		end
+		if not mp:thedark() then
+			p [[Тут и так светло.]]
+			return
+		end
+		p [[Ты включила в мобильнике фонарик.]]
+		pl:need_scene(true)
+		s:attr 'light'
+	end;
+	before_SwitchOn = function(s)
+		if s:multi_alias() == 2 then
+			s:before_Light()
+			return
+		end
+		return false
+	end;
 	before_SwitchOff = function(s)
+		if s:has 'light' then
+			p [[Ты выключила фонарик в телефоне.]]
+			s:attr '~light'
+			pl:need_scene(true)
+			return
+		end
+		if s:multi_alias() == 2 then
+			p [[Фонарик и так выключен.]]
+			return
+		end
 		if s.compass then
 			p [[Если ты выключишь телефон, ты лишишься компаса.]]
 			return
@@ -301,6 +338,10 @@ obj {
 				else
 					p [[Здорово, что в твоём смарфоне есть компас! В целях экономии батареи ты включаешь режим "в полёте".]]
 				end
+			else
+				p [[Это твой старенький китайский смартфон. В основном, ты используешь его для социальных сетей.]]
+				p [[А сейчас он служит тебе компасом.]]
+				if s.flash then p [[И фонариком.]] end
 			end
 		end
 	end;
@@ -344,6 +385,19 @@ Verb {
 	'на {noun}/дт : Play',
 	' : Play',
 }
+
+Verb {
+	'#Light';
+	'[|по|под]свети/ть,[|по|свеч/у,освети/ть';
+	'{noun}/тв,held : Light'
+}
+
+function mp:Light(w)
+	if mp:check_held(w) then
+		return
+	end
+	p "{#First} не {#if_hint/#second,plural,могут,может} светить."
+end
 
 function mp:Knock(w)
 	if mp:check_live(w) then
@@ -959,6 +1013,7 @@ Area {
 	dsc = [[Ты стоишь перед ледяной стеной, которая продолжается на север и юг. На востоке начинается лес.]];
 	['e_to,ne_to,se_to'] = '#лес';
 	w_to = '#стена';
+	in_to = '#стена';
 	['nw_to,sw_to,n_to,s_to'] = function(s)
 		p [[По этому направлению нет ничего интересного. Такая же ледяная стена.]];
 	end;
@@ -966,7 +1021,6 @@ Area {
 	obj {
 		nam = '#лес';
 		-"хвойный лес,лес|чаща|деревья";
-		in_to = '#стена';
 		before_Default = [[Лес далеко.]];
 		before_Exam = function()
 			p "На деревьях лежит снег.";
@@ -992,7 +1046,7 @@ Area {
 				p [[Как ты это сделаешь? Стена твёрдая, гладкая и скользкая.]]
 				return
 			end
-			p [[TODO]]
+			walk 'пещера'
 		end;
 		before_Exam = function(s)
 			if s.light > 0 then
@@ -1002,6 +1056,11 @@ Area {
 			end
 		end;
 		daemon = function(s)
+			if player_moved() then
+				s.light = 0
+				s:daemonStop()
+				return
+			end
 			if s.light == 1 then
 				p [[Ты замечаешь, что под поверхностью льда разливается фиолетовое свечение.]]
 			elseif s.light == 2 then
@@ -1036,3 +1095,16 @@ Area {
 		end;
 	}:attr 'scenery';
 }
+
+room {
+	nam = 'пещера';
+	title = function(s)
+		if mp:thedark() then
+			p [[В темноте]]
+		else
+			p [[Ледяная пещера]]
+		end
+	end;
+	dsc = [[Ты находишься внутри просторной ледяной пещеры. Путь ведёт на запад.]];
+	['e_to,out_to'] = 'Ледяные горы';
+}:attr '~light';
