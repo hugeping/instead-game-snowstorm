@@ -600,7 +600,7 @@ obj {
 			s:daemonStop()
 			s.step = 0;
 		end
-		return false;
+		return
 	end;
 }:disable():with {
 	obj {
@@ -784,7 +784,7 @@ Area {
 		end;
 		daemon = function(s)
 			if s.talked then
-				return false
+				return
 			end
 			if here() ^ 'В лесу' and where(s) ^ 'В лесу' and _'В лесу'.depth == 0
 			and rnd(3) == 1 then
@@ -794,7 +794,7 @@ Area {
 				p [[Хлопая крыльями сова улетела в сторону леса.]]
 				move(s, 'В лесу')
 			end
-			return false
+			return
 		end;
 	} : with {
 		obj {
@@ -938,7 +938,10 @@ Area {
 	title = 'У ледяных гор';
 	dsc = [[Ты стоишь перед ледяной стеной, которая продолжается на север и юг. На востоке начинается лес.]];
 	['e_to,ne_to,se_to'] = '#лес';
-	['w_to,nw_to,sw_to'] = '#стена';
+	w_to = '#стена';
+	['nw_to,sw_to,n_to,s_to'] = function(s)
+		p [[По этому направлению нет ничего интересного. Такая же ледяная стена.]];
+	end;
 }: with {
 	obj {
 		nam = '#лес';
@@ -954,7 +957,35 @@ Area {
 	Snow { nam = '#снег' };
 	Sky { nam = '#небо' };
 	obj {
-		-"ледяная стена,стена|лёд|горы/жр";
+		-"ледяная стена,стена|лёд|лед|горы/жр";
 		nam = '#стена';
+		light = 0;
+		before_Exam = function(s)
+			if s.light > 0 then
+				p [[Сквозь лёд ты видишь фиолетовое свечение.]]
+			else
+				p [[Ледяная стена отвесно уходит вверх.]]
+			end
+		end;
+		daemon = function(s)
+			if s.light == 1 then
+				p [[Ты замечаешь, что под поверхностью льда разливается фиолетовое свечение.]]
+			elseif s.light == 2 then
+				p [[Фиолетовое свечение под поверхностью льда усиливается!]]
+			elseif s.light == 3 then
+				p [[Фиолетовое свечение ослабевает.]]
+			else
+				s:daemonStop()
+				s.light = 0
+				return
+			end
+			s.light = s.light + 1
+		end;
+		before_Attack = [[Скала {$fmt em|выглядит} твёрдой. Ты решила не рисковать.]];
+		before_Touch = function(s)
+			p [[Ты касаешься ладонью гладкой ледяной поверхности.]];
+			s.light = 1
+			s:daemonStart();
+		end;
 	}:attr 'scenery';
 }
