@@ -345,6 +345,26 @@ Verb {
 	' : Play',
 }
 
+function mp:Knock(w)
+	if mp:check_live(w) then
+		return
+	end
+	if mp.args[1].word == 'в' then
+		p [[Ты постучала в]]
+		p (w:noun'вн', ".")
+	else
+		p [[Ты постучала по]]
+		p (w:noun'дт', ".")
+	end
+	p "Ничего не произошло."
+end
+
+Verb {
+	"#Knock",
+	"[|по]стуч/ать",
+	"?в {noun}/вн : Knock"
+}
+
 Verb {
 	'#Tune';
 	'настро/ить,настра/ивать',
@@ -946,6 +966,7 @@ Area {
 	obj {
 		nam = '#лес';
 		-"хвойный лес,лес|чаща|деревья";
+		in_to = '#стена';
 		before_Default = [[Лес далеко.]];
 		before_Exam = function()
 			p "На деревьях лежит снег.";
@@ -957,9 +978,22 @@ Area {
 	Snow { nam = '#снег' };
 	Sky { nam = '#небо' };
 	obj {
-		-"ледяная стена,стена|лёд|лед|горы/жр";
+		function(s)
+			pr (-"ледяная стена,стена|лёд|лед|скала|гора|горы/жр");
+			if s.light > 0 then
+				pr (-"|свечение/ср|свет")
+			end
+		end;
 		nam = '#стена';
 		light = 0;
+		before_Climb = [[У тебя вряд ли это получится. Стена отвесная.]];
+		["before_Enter,Walk"] = function(s)
+			if s.light == 0 then
+				p [[Как ты это сделаешь? Стена твёрдая, гладкая и скользкая.]]
+				return
+			end
+			p [[TODO]]
+		end;
 		before_Exam = function(s)
 			if s.light > 0 then
 				p [[Сквозь лёд ты видишь фиолетовое свечение.]]
@@ -981,10 +1015,23 @@ Area {
 			end
 			s.light = s.light + 1
 		end;
-		before_Attack = [[Скала {$fmt em|выглядит} твёрдой. Ты решила не рисковать.]];
+		before_Attack = function(s)
+			p [[Скала {$fmt em|выглядит} твёрдой. Ты решила не рисковать.]];
+		end;
+		before_Knock = function(s)
+			if s.light == 0 then
+				return false
+			end
+			p [[Ты попыталась постучать по стене, но у тебя это не вышло! Рука прошла сквозь лёд!]]
+		end;
 		before_Touch = function(s)
 			p [[Ты касаешься ладонью гладкой ледяной поверхности.]];
-			s.light = 1
+			if s.light > 0 then
+				p [[Как странно, твоя рука проходит сквозь лёд!]]
+				s.light = 2
+			else
+				s.light = 1
+			end
 			s:daemonStart();
 		end;
 	}:attr 'scenery';
