@@ -273,6 +273,12 @@ obj {
 	nam = "телефон";
 	flash = false;
 	compass = false;
+	each_turn = function(s)
+		if here():has 'light' and s:has 'light' then
+			p [[В целях экономии заряда ты выключила фонарик.]]
+			s:attr '~light'
+		end
+	end;
 	['before_Drop,Insert'] = function(s, w)
 		if s.compass and w ~= pl then
 			p [[В телефоне есть компас, который тебе нужен.]]
