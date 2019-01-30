@@ -279,7 +279,7 @@ obj {
 			s:attr '~light'
 		end
 	end;
-	['before_Drop,Insert'] = function(s, w)
+	['before_Drop,Insert,PutOn'] = function(s, w)
 		if s.compass and w ~= pl then
 			p [[В телефоне есть компас, который тебе нужен.]]
 			return
@@ -1233,7 +1233,7 @@ room {
 		-"осколки кристалла|осколки|кусочки|куски|осколок*";
 		nam = 'осколки';
 		before_Exam = [[Осколки кристалла пульсируют слабым фиолетовым свечением.]];
-		['before_Drop,ThrowAt,Insert'] = function(s, w)
+		['before_Drop,PutOn,Insert'] = function(s, w)
 			if not w ^ 'ообрыв' then
 				return false
 			end
