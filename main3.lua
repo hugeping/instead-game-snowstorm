@@ -700,6 +700,7 @@ obj {
 			return
 		end
 		s:daemonStop()
+		s.sit = false
 		if here() ^ 'В лесу' then
 			walk 'к хребту'
 		else
