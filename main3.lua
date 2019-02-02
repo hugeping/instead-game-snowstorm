@@ -1868,7 +1868,7 @@ room {
 		nam = '#двери';
 		door_to = 'Тронный зал';
 	}:attr 'openable,open';
-	Prop { -"пололок|пол" };
+	Prop { -"потолок|пол" };
 }
 
 room {
