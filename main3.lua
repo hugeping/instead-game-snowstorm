@@ -1330,6 +1330,9 @@ obj {
 			p ("Тебе жаль расставаться с ", w:noun 'тв', ".")
 			return
 		end
+		if w ^ 'перо' then
+			p ("Оно может тебе пригодиться.")
+		end
 		return false
 	end;
 	after_Receive = function(s, w)
