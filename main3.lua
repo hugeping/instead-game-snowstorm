@@ -2744,6 +2744,17 @@ function mp:Think()
 		end
 		return
 	end
+	if here() ^ 'Ледяные горы' then
+		p [[Тебе приходит в голову ]]
+		if _'#стена'.light == 0 then
+			p [[дотронуться стены.]]
+		else
+			p [[войти в свечение.]]
+		end
+		return
+	end
+	if here() ^ 'пещера' then
+	end
 	p [[Тебе ничего не приходит в голову.]]
 	return false
 end
