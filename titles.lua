@@ -90,6 +90,7 @@ end
 
 std.mod_start(function(s)
 --	autodetect_theme()
+	decor.bgcol = '#ffffff'
 	if anim_fn then
 		anim(anim_fn)
 	end
