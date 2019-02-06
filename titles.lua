@@ -63,7 +63,6 @@ end)
 
 const 'FADE_LONG' (64)
 global 'anim_fn' (false)
-
 declare 'move_up' (function(v)
 	if _'titles'.finish then return end
 	v.y = v.y - 1
@@ -121,10 +120,12 @@ local titles = {
 	{"Благодарности:", style = 2},
 	{"Семье (за терпение)" },
 	{"Работодателю (за зарплату)"},
-	{"Вам (за прохождение этой мутной игры)"},
+	{"Вам (за прохождение нашей игры)"},
 	{"Всем тем, кто не мешал"},
 	{ };
 	{"КОНЕЦ", style = 1};
+	{ },
+	{ "Февраль 2019", style = 2 },
 }
 
 room {
@@ -163,9 +164,10 @@ room {
 	end;
 	timer = function(s)
 		local last ='text'..tostring(#titles)
+		local first = 'text1'
 		if D(last) then
-			if D(last).y < 20 then
-				D(last).process = nil
+			if D(first).y < 20 then
+				_'titles'.finish = true
 			end
 			return false
 		end
