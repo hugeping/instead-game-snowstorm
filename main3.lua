@@ -2679,4 +2679,70 @@ Verb {
 	"в|во {noun}/вн : Search",
 }
 
+function mp:Think()
+	if here() ^ 'В машине' then
+		p [[Тебе приходит в голову ]];
+		if not visited'разговор1' then
+			p [[поговорить с матерью.]]
+		elseif not _'телефон'.seen then
+			p [[смотреть в телефон.]]
+		elseif have 'телефон' then
+			p [[отдать телефон матери.]]
+		elseif blizzard == 0 then
+			p [[смотреть в окно.]]
+		elseif blizzard == 1 then
+			p [[поговорить с матерью.]]
+		elseif blizzard < 11 then
+			p [[ждать.]]
+		else
+			p [[выйти из машины.]]
+		end
+		return
+	end
+	if here() ^ 'поле' then
+		p [[Тебе приходит в голову ]];
+		if not have 'телефон' or not have 'браслет' then
+			p [[осмотреть машину. Может быть в бардачке есть что-нибудь полезное?]]
+		elseif not have 'скрипка' then
+			p [[взять скрипку.]]
+		elseif not _'телефон'.compass then
+			p [[посмотреть в телефон. В нём есть компас.]]
+		elseif not _'сова'.talked then
+			if not seen 'сова' then
+				p [[идти в лес.]]
+			else
+				if _'сова'.seen then
+					p [[поговорить с совой.]]
+				else
+					p [[осмотреть сову.]]
+				end
+			end
+		elseif not have 'перо' then
+			p [[взять перо.]]
+		else
+			p [[идти в лес.]]
+		end
+		return
+	end
+	if here() ^ 'В лесу' then
+		p [[Тебе приходит в голову ]];
+		if not _'сова'.talked then
+			if where'сова' ^ 'В лесу' then
+				p [[ждать.]];
+			else
+				p [[идти на восток.]];
+			end
+		elseif not seen 'олень' or disabled 'олень' then
+			p [[идти на запад.]]
+		elseif not _'олень'.sit then
+			p [[дать оленю перо.]]
+		else
+			p [[сесть на оленя.]]
+		end
+		return
+	end
+	p [[Тебе ничего не приходит в голову.]]
+	return false
+end
+
 game.hint_verbs = { "#Exam", "#LookIn", "#Walk", "#Take", "#Play", "#Search", "#Give", "#Touch", "#Attack", "#Talk", "#Cry", "#Open", "#Close", "#Jump" }
