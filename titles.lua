@@ -155,7 +155,7 @@ room {
 		s.w, s.h = std.tonum(theme.get 'scr.w'), std.tonum(theme.get 'scr.h')
 		D()
 		for i = 1, 250 do
-			D {"flake"..tostring(i), 'img', flake_spr, process = flake, x = rnd(theme.scr.w()), y = rnd(theme.scr.h()), speed = rnd(5), z = 1 }
+			D {"flake"..tostring(i), 'img', flake_spr, process = flake, x = -rnd(theme.scr.w()), y = -rnd(theme.scr.h()), speed = rnd(5), z = 1 }
 		end
 		anim'titles'
 		fading.set {"crossfade", max = FADE_LONG }
@@ -163,6 +163,9 @@ room {
 	timer = function(s)
 		local last ='text'..tostring(#titles)
 		if D(last) then
+			if D(last).y < 20 then
+				D(last).process = nil
+			end
 			return false
 		end
 		s.offset = s.offset + 1
