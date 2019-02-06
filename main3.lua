@@ -2,12 +2,13 @@
 --$Author:Peter Kosyh$
 require "mp-ru"
 require "fmt"
+require "titles"
 fmt.dash = true
 fmt.quotes = true
 -- loadmod "fading"
 -- mp.errhints = false
 game.dsc = [[Простая игра написанная специально для ЗОК-2019.]]
-
+game.pic = 'img/1.png'
 cutscene {
 	nam = 'intro';
 	text = {
@@ -497,7 +498,7 @@ function mp:Cry(w)
 end
 
 Verb {
-	"#cry",
+	"#Cry",
 	"[|по|за]крич/ать,крикн/уть,[|за|по]плак/ать,[|за|по]плач/ь",
 	": Cry"
 }
@@ -2622,7 +2623,7 @@ obj {
 		}
 		p (t[rnd(#t)])
 	end;
-}
+}:attr 'scenery';
 
 obj {
 	-"мама|мать";
@@ -2671,3 +2672,11 @@ room {
 	'зеркало2';
 	'мама2';
 }
+
+Verb {
+	"#LookIn",
+	"смотреть",
+	"в|во {noun}/вн : Search",
+}
+
+game.hint_verbs = { "#Exam", "#LookIn", "#Walk", "#Take", "#Play", "#Search", "#Give", "#Touch", "#Attack", "#Talk", "#Cry", "#Open", "#Close", "#Jump" }
