@@ -2680,6 +2680,9 @@ Verb {
 }
 
 function mp:Think()
+	if here() ^ 'Тьма' then
+		return false
+	end
 	if here() ^ 'В машине' then
 		p [[Тебе приходит в голову ]];
 		if not visited'разговор1' then
