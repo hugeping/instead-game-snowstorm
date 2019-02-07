@@ -486,6 +486,7 @@ Verb {
 	'[|раз]бить,[|раз]бей';
 	'{noun}/вн,scene : Attack';
 }
+
 Verb {
 	'#PutOn';
 	'повес/ить',
@@ -2511,7 +2512,7 @@ room {
 		['before_Enter,Climb'] = function(s)
 			mp:xaction("Enter", _'#пламя')
 		end;
-	}:attr 'scenery,supporter':with{
+	}:attr 'scenery,supporter,enterable':with{
 		obj {
 			nam = '#пламя';
 			-"сияние|пламя|огонь|свечение";
@@ -2687,6 +2688,7 @@ cutscene {
 	exit = function()
 		remove 'сова2'
 		move('королева2', 'комната')
+		_'зеркало':attr'enterable'
 	end;
 	next_to = 'комната';
 }
@@ -3034,4 +3036,4 @@ Verb {
 	"~ {noun}/дт,scene {noun}/вн,held : Give reverse",
 }
 
-game.hint_verbs = { "#Exam", "#Drop", "#LookIn", "#Walk", "#Take", "#Play", "#Search", "#Give", "#Touch", "#Attack2", "#Talk", "#Cry", "#Open", "#Close", "#Jump", "#Wait", "#Wear", "#Sit", "#Exit", "#SwitchOn", "#SwitchOff" }
+game.hint_verbs = { "#Exam", "#Drop", "#LookIn", "#ThrowAt", "#Walk", "#Take", "#Play", "#Give", "#Touch", "#Attack2", "#Talk", "#Cry", "#Open", "#Close", "#Jump", "#Wait", "#Wear", "#Sit", "#Exit", "#SwitchOn", "#SwitchOff", "#PutOn" }
