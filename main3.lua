@@ -455,7 +455,7 @@ obj {
 		end
 		return false
 	end;
-}:attr 'switchable,on';
+}:attr 'switchable,on,multi';
 
 
 obj {
@@ -482,7 +482,8 @@ function mp:Play(w)
 end
 
 Verb {
-	'разби/ть,разбей,разобью';
+	'#Attack2';
+	'[|раз]бить,[|раз]бей';
 	'{noun}/вн,scene : Attack';
 }
 Verb {
@@ -1950,14 +1951,14 @@ dlg {
 						[[Хорошо, обещаю.]];
 						function(s)
 							p [[-- Ну что же, чувствуй себя как дома. Дворец в твоём распоряжении.]];
-							walkout()
+							walkback'Тронный зал'
 						end;
 					};
 					{
 						[[Похоже, у меня нет выбора. Я в твоей власти? Мне не выбраться отсюда?]];
 						function(s)
 							p [[-- Хорошо, что мы поняли друг-друга. Дворец в твоём распоряжении.]];
-							walkout()
+							walkback 'Тронный зал'
 						end
 					}
 				};
@@ -2759,6 +2760,12 @@ Verb {
 	"в|во {noun}/вн : Search",
 }
 
+Verb {
+	"#Sit",
+	"сесть",
+	"на {noun}/вн : Enter",
+}
+
 global 'hint_num' (5)
 function use_hint()
 end
@@ -3020,4 +3027,11 @@ function mp:before_Think()
 	return false
 end
 
-game.hint_verbs = { "#Exam", "#LookIn", "#Walk", "#Take", "#Play", "#Search", "#Give", "#Touch", "#Attack", "#Talk", "#Cry", "#Open", "#Close", "#Jump" }
+Verb {
+	"#Give",
+	"дать,отда/ть,предло/жить,предла/гать,дам,даю,дадим",
+	"{noun}/вн,held {noun}/дт,scene : Give",
+	"~ {noun}/дт,scene {noun}/вн,held : Give reverse",
+}
+
+game.hint_verbs = { "#Exam", "#Drop", "#LookIn", "#Walk", "#Take", "#Play", "#Search", "#Give", "#Touch", "#Attack2", "#Talk", "#Cry", "#Open", "#Close", "#Jump", "#Wait", "#Wear", "#Sit", "#Exit", "#SwitchOn", "#SwitchOff" }
