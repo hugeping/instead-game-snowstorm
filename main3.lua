@@ -2868,10 +2868,14 @@ function mp:before_Think()
 			p [[войти в зеркало.]]
 			return
 		end
-		if not visited 'gotmirror' or not _'зеркало'.seen then
-			p [[выйти.]]
-		elseif not seen 'зеркало' and not have 'зеркало' then
-			p [[идти и забрать зеркало оттуда, где ты его оставила.]]
+		if not seen 'зеркало' and not have 'зеркало' then
+			if not visited 'gotmirror' then
+				p [[выйти из комнаты.]]
+			else
+				p [[идти и забрать зеркало оттуда, где ты его оставила.]]
+			end
+		elseif not _'зеркало'.seen then
+			p [[Посмотреть в зеркало.]]
 		elseif not _'сова2'.finside and _'сова2'.num < 3 then
 			p [[ждать.]]
 		elseif _'#окно':hasnt'open' and not _'сова2'.finside then

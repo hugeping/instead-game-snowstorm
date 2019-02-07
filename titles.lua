@@ -1,3 +1,4 @@
+require "autotheme"
 require "timer"
 require "theme"
 require "decor"
