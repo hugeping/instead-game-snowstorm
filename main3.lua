@@ -557,6 +557,17 @@ function start(load)
 	end
 end
 function init()
+	if theme.name() == '.mobile' or theme.name() == '.mobile2' then
+		mp.togglehelp = true
+		mp.autohelp = true
+		mp.autohelp_limit = 1000
+		mp.compl_thresh = 0
+	else
+		mp.togglehelp = false
+		mp.autohelp = false
+		mp.autohelp_limit = 8
+		mp.compl_thresh = 1
+	end
 	pl.description = [[Тебя зовут Вера. Тебе почти 13 лет.]];
 	pl.word = -'ты/жр,2л'
 --	pl.room = 'intro'
