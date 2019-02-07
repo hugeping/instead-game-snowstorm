@@ -3,7 +3,7 @@ require "timer"
 require "theme"
 require "decor"
 require "snd"
-require "fading"
+--require "fading"
 
 declare 'flake' (function(v)
 	local sp = v.speed + rnd(2)
@@ -161,7 +161,7 @@ room {
 			D {"flake"..tostring(i), 'img', flake_spr, process = flake, x = -rnd(theme.scr.w()), y = -rnd(theme.scr.h()), speed = rnd(5), z = 1 }
 		end
 		anim'titles'
-		fading.set {"crossfade", max = FADE_LONG }
+--		fading.set {"crossfade", max = FADE_LONG }
 	end;
 	timer = function(s)
 		local last ='text'..tostring(#titles)

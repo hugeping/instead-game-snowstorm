@@ -8,9 +8,23 @@ fmt.quotes = true
 -- loadmod "fading"
 -- mp.errhints = false
 game.dsc = [[Простая игра написанная специально для ЗОК-2019.]]
-game.pic = 'img/1.png'
+
+function pic_push(name)
+end
+
+function pic_pop()
+end
+
+function pic_set(name)
+end
+
+include "pic"
+
 cutscene {
 	nam = 'intro';
+	enter = function()
+		pic_set('img/1.png')
+	end;
 	text = {
 		[[Старенький синий седан едет по заснеженной трассе. Внутри машины -- двое.^^
 		Ведёт машину усталая женщина лет 35. На заднем месте справа сидит её дочь -- девочка-подросток.^^
@@ -71,6 +85,13 @@ Useless = Class {
 room {
 	-"машина";
 	nam = 'В машине';
+	before_Cry = function(s)
+		if seen '#мама' then
+			p [[-- Прекрати истерику! -- произносит мать.]]
+		else
+			return false
+		end
+	end;
 	dsc = [[Ты сидишь на заднем сидении машины и смотришь в окно.]];
 	exit = function()
 		if seen '#мама' then
@@ -101,11 +122,15 @@ room {
 			"Машину слегка заносит на снежной дороге.";
 		}
 		if blizzard >= 2 then
+			if blizzard < 7 then
+				pic_set 'img/2-pan.png'
+			end
 			blizzard = blizzard + 1
 			if blizzard > 5 then
 				enable '#заправка'
 				disable '#метель'
 				if blizzard == 7 then
+					pic_set 'img/7.png'
 					p [[Мать заглушила двигатель.]]
 					return
 				end
@@ -166,6 +191,7 @@ room {
 					end
 					p [[-- Мама! Посмотри, там справа. Что то странное...^]]
 					p [[-- Не отвлекай меня от дороги!]]
+					pic_set 'img/6.png'
 					blizzard = 2
 					return
 				end
@@ -196,7 +222,7 @@ room {
 	};
 	obj {
 		nam = '#метель';
-		-"метель,буря|смерч";
+		-"метель,буря|смерч|клубы";
 		before_Default = [[Она пока ещё далеко.]];
 		before_Exam = [[Буря, метель или ... смерч? Что бы это ни было, оно пугает тебя.]];
 	}:attr'scenery':disable();
@@ -214,6 +240,7 @@ room {
 					pn [[Разглядывая белоснежный пейзаж, ты замечаешь вдали нечто странное.]]
 					enable '#метель'
 					blizzard = 1
+					pic_set 'img/5.png'
 				end
 				pn [[Ты видишь, как по земле ползут огромные клубы пара или снега.]]
 				p [[Огромная снежная буря, накрывая деревья, движется к трассе!]]
@@ -232,6 +259,12 @@ room {
 dlg {
 	nam = 'разговор1';
 	title = false;
+	enter = function()
+		pic_push('img/3.png')
+	end;
+	exit = function()
+		pic_pop();
+	end;
 	phr = {
 		[[-- Я говорю, тебе там понравится. Там хорошая школа, я узнавала... И музыкальная школа совсем недалеко. -- ты слышишь в голосе матери настойчивость.]];
 		{
@@ -417,6 +450,7 @@ obj {
 		if w ^ '#мама' then
 			p [[Ты протягиваешь телефон матери, она молча забирает его и кладёт в бардачок.]]
 			move(s, 'бардачок')
+			pic_set 'img/4.png'
 			return
 		end
 		return false
@@ -447,10 +481,9 @@ function mp:Play(w)
 	return false
 end
 
-VerbExtend {
-	'#Attack';
+Verb {
 	'разби/ть,разбей,разобью';
-	'{noun}/вн,scene';
+	'{noun}/вн,scene : Attack';
 }
 Verb {
 	'#PutOn';
@@ -532,11 +565,14 @@ end
 cutscene {
 	nam = "метель1";
 	title = false;
+	enter = function(s)
+		pic_set('img/8.png')
+	end;
 	text = {
-		[[Ты открываешь дверь и толкаешь её наружу.]];
-		[[Ты чувствуешь, как ветер давит на дверь с другой стороны, но ты сильней и вот -- дверь открыта.]];
-		[[Холод, вместе с вихрем злых снежинок, быстро забирается внутрь салона.]];
-		[[Ты выходишь из машины когда...]];
+		[[Ты открываешь дверь и толкаешь её наружу.^^
+		Ты чувствуешь, как ветер давит на дверь с другой стороны, но ты сильней и вот -- дверь открыта.^^
+		Холод, вместе с вихрем злых снежинок, быстро забирается внутрь салона.^^
+		Ты выходишь из машины когда...]];
 		[[На тебя обрушивается...]];
 	};
 	next_to = "метель2";
@@ -549,6 +585,9 @@ Title {
 {$fmt c|Игра на ЗОК-2019}]]
 	};
 	next_to = 'поле';
+	exit = function(s)
+		pic_set('img/20-pan.png')
+	end
 }
 
 obj {
@@ -819,6 +858,7 @@ local function forest_scenery(s)
 	elseif s.depth == 3 then
 		enable '#поляна'
 		enable 'олень'
+		pic_set 'img/22.png'
 		_'олень'.step = 0
 		_'олень'.sit = false
 		_'олень':daemonStart()
@@ -1041,6 +1081,12 @@ obj {
 dlg {
 	nam = 'разговор с совой';
 	title = false;
+	enter = function(s)
+		pic_set 'img/21.png'
+	end;
+	exit = function()
+--		pic_pop()
+	end;
 	phr = {
 		[[-- О, я слышу тебя, дитя! -- ответ птицы напугал тебя.]],
 		{
@@ -1103,10 +1149,10 @@ cutscene {
 	nam = 'к хребту';
 	title = false;
 	text = {
-		[[Ты садишься на оленя и он поднимается с колен.]];
-		[[Вы мчитесь через лес на запад. Снова и снова олень ловко огибает встречные деревья и вы оставляете их позади.]];
-		[[Постепенно лес начинает редеть и сквозь деревья ты видишь ледяные горы.]];
-		[[Олень остановился перед ледяной стеной и опустился, чтобы ты могла слезть.]];
+		[[Ты садишься на оленя и он поднимается с колен.^^
+		Вы мчитесь через лес на запад. Снова и снова олень ловко огибает встречные деревья и вы оставляете их позади.^^
+		Постепенно лес начинает редеть и сквозь деревья ты видишь ледяные горы.^^
+		Олень остановился перед ледяной стеной и опустился, чтобы ты могла слезть.]];
 	};
 	next_to = 'Ледяные горы';
 	onexit = function(s, to)
@@ -1119,10 +1165,10 @@ cutscene {
 	nam = 'к поляне';
 	title = false;
 	text = {
-		[[Ты садишься на оленя и он поднимается с колен.]];
-		[[Вы мчитесь через лес на восток. Снова и снова олень ловко огибает встречные деревья и вы оставляете их позади.]];
-		[[Постепенно лес начинает редеть.]];
-		[[Олень остановился и опустился на колени, чтобы ты могла слезть.]];
+		[[Ты садишься на оленя и он поднимается с колен.^^
+		Вы мчитесь через лес на восток. Снова и снова олень ловко огибает встречные деревья и вы оставляете их позади.^^
+		Постепенно лес начинает редеть.^^
+		Олень остановился и опустился на колени, чтобы ты могла слезть.]];
 	};
 	next_to = 'В лесу';
 	onexit = function(s, to)
@@ -1138,6 +1184,11 @@ Area {
 	['e_to,ne_to,se_to'] = '#лес';
 	w_to = '#стена';
 	in_to = '#стена';
+	onexit = function(s, t)
+		if t ^ 'пещера' and not visited 'пещера' then
+			pic_set 'img/23-pan.png'
+		end
+	end;
 	['nw_to,sw_to,n_to,s_to'] = function(s)
 		p [[По этому направлению нет ничего интересного. Такая же ледяная стена.]];
 	end;
@@ -1258,6 +1309,7 @@ room {
 			return false
 		end
 		_'#кристаллы'.broken = true
+		pic_set 'img/24.png'
 		p [[Интересно... А что если? Не успев додумать мысль, ты уже берёшь скрипку в руки.^^
 Ты извлекаешь "ми" второй октавы. Сначала ничего не происходит, но затем ты слышишь, как странный кристалл отзывается
 на звук твоей скрипки.^^
@@ -1588,6 +1640,11 @@ room {
 	e_to = 'За ледяной стеной';
 	w_to = '#замок';
 	in_to = '#замок';
+	onenter = function(s)
+		if not visited(s) then
+			pic_set 'img/25.png'
+		end
+	end;
 	dsc = function(s)
 		p [[Ты стоишь у подножия ледяной скалы. Отвесная стена уходит высоко вверх.]];
 		if not disabled 'ворота' then
@@ -1764,6 +1821,7 @@ room {
 			pn [[-- Я ждала тебя! Подойди же и поцелуй меня! -- голос матери, отраженный от ледяных стен зала показался тебе чужим.]]
 			DaemonStart 'королева'
 			remove 'сова'
+			pic_set 'img/blizzard.png'
 		end
 	end;
 	dsc = function(s)
@@ -1939,6 +1997,12 @@ cutscene {
 dlg {
 	nam = 'сова2-диалог1';
 	title = false;
+	enter = function(s)
+		pic_push 'img/21.png'
+	end;
+	exit = function(s)
+		pic_pop()
+	end;
 	phr = {
 		[[-- Я хочу помочь тебе, дитя. -- сказала странная птица.]];
 		{
@@ -1955,6 +2019,12 @@ dlg {
 dlg {
 	nam = 'сова2-диалог2';
 	title = false;
+	enter = function(s)
+		pic_push 'img/21.png'
+	end;
+	exit = function(s)
+		pic_pop()
+	end;
 	phr = {
 		[[-- Итак, дитя, ты уже поняла, что твоя мама находится в нормальном мире? А ты -- за зеркалом?]];
 		{
@@ -2037,6 +2107,12 @@ dlg {
 dlg {
 	nam = 'сова2-диалог3';
 	title = false;
+	enter = function(s)
+		pic_push 'img/21.png'
+	end;
+	exit = function(s)
+		pic_pop()
+	end;
 	phr = {
 		[[-- Итак, дитя, что ты решила? Ты отдашь мне свои глаза?]];
 		{
@@ -2683,11 +2759,17 @@ Verb {
 	"в|во {noun}/вн : Search",
 }
 
+global 'hint_num' (5)
+function use_hint()
+end
 function mp:before_Think()
 	if here() ^ 'Тьма' then
 		return false
 	end
 	if here() ^ 'В машине' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]];
 		if not visited'разговор1' then
 			p [[поговорить с матерью.]]
@@ -2707,6 +2789,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'поле' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]];
 		if not have 'телефон' or not have 'браслет' then
 			p [[осмотреть машину.]]
@@ -2737,6 +2822,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'В лесу' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]];
 		if not _'сова'.talked then
 			if where'сова' ^ 'В лесу' then
@@ -2754,6 +2842,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'Ледяные горы' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if _'#стена'.light == 0 then
 			p [[дотронуться стены.]]
@@ -2763,6 +2854,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'пещера' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if mp:thedark() then
 			p [[посветить телефоном.]]
@@ -2780,9 +2874,16 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'пещера2' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if not seen 'осколки' then
-			p [[бросить осколки.]]
+			if not have'осколки' then
+				p [[идти на юго-восток.]]
+			else
+				p [[бросить осколки.]]
+			end
 		elseif mp:thedark() then
 			p [[включить фонарик.]]
 		else
@@ -2791,18 +2892,30 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'обрыв' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову перепрыгнуть через обрыв.]]
 		return
 	end
 	if here() ^ 'Другая сторона' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову выйти наружу.]]
 		return
 	end
 	if here() ^ 'За ледяной стеной' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову идти к скале.]]
 		return
 	end
 	if here() ^ 'У замка' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if disabled 'ворота' then
 			p [[дать перо статуе.]]
@@ -2812,6 +2925,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'Тронный зал' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if visited 'gotmirror' and not _'зеркало'.seen then
 			p [[посмотреть в зеркало.]]
@@ -2835,6 +2951,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'Зал с зеркалами' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if not _'Зал с зеркалами'.know then
 			p [[бросить перо.]]
@@ -2848,6 +2967,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'ледяное-пламя' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if visited 'gotmirror' then
 			if not _'зеркало'.seen then
@@ -2863,6 +2985,9 @@ function mp:before_Think()
 		return
 	end
 	if here() ^ 'комната' then
+		if use_hint() then
+			return
+		end
 		p [[Тебе приходит в голову ]]
 		if seen 'королева2' then
 			p [[войти в зеркало.]]

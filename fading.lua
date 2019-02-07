@@ -2,7 +2,7 @@ require "sprite"
 require "theme"
 require "timer"
 
-instead.fading = false
+-- instead.fading = false
 
 local f = std.obj {
 	{
