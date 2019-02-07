@@ -157,7 +157,7 @@ room {
 		s.font_height = 16
 		s.w, s.h = std.tonum(theme.get 'scr.w'), std.tonum(theme.get 'scr.h')
 		D()
-		for i = 1, 250 do
+		for i = 1, 200 do
 			D {"flake"..tostring(i), 'img', flake_spr, process = flake, x = -rnd(theme.scr.w()), y = -rnd(theme.scr.h()), speed = rnd(5), z = 1 }
 		end
 		anim'titles'

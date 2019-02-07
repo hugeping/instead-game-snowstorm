@@ -2,7 +2,6 @@
 --$Author:Peter Kosyh$
 require "mp-ru"
 require "fmt"
-require "titles"
 fmt.dash = true
 fmt.quotes = true
 -- loadmod "fading"

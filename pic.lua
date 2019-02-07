@@ -1,10 +1,52 @@
 require "sprite"
 require "theme"
-
-if theme.name():find(".", 1, true) ~= 1 then
+require "snd"
+if not theme.name() or theme.name():find(".", 1, true) ~= 1 then
 	dprint "Disabling pictures"
-else
+local titles = [[
+{$fmt c|{$fmt b|МЕТЕЛЬ}^^
 
+{$fmt em|История и код:}^
+Пётр Косых^
+{$fmt em|Иллюстрации:}^
+Pakowacz^^
+
+{$fmt em|По мотивам:}^
+Коралина // Нил Гейман^^
+
+{$fmt em|Музыка:}^
+Largo – from Concerto No 5 – J.S. Bach // Jon Sayles^^
+
+{$fmt em|Движок:}^
+INSTEAD3: МЕТАПАРСЕР3 // Пётр Косых^^
+
+http://instead.syscall.ru^^
+
+{$fmt em|Альфа тестирование:}^
+spline^^
+
+{$fmt em|Благодарности:}^
+Семье (за терпение)^
+Работодателю (за зарплату)^
+Вам (за прохождение нашей игры)^
+Всем тем, кто не мешал^^
+
+{$fmt b|КОНЕЦ}^^
+
+{$fmt em|Февраль 2019}}]];
+
+room {
+	nam = 'titles';
+	title = false;
+	dsc = titles;
+	noparser = true;
+	enter = function(s)
+		snd.music 'mus/largo.ogg'
+	end;
+}
+
+else
+require "titles"
 global 'pictures' ({})
 
 local spr
