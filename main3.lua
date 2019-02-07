@@ -2541,7 +2541,7 @@ cutscene {
 		[[Ничто живое не смогло бы пережить этот холод, но ты чувствуешь, как тебя согревает браслет матери.]];
 		[[Ты вглядываешься в фиолетовые языки ледяного пламени и вдруг замечаешь, что можешь охватить взором весь этот громадный зал.]];
 		[[Сотни тысяч зеркал, среди которых есть то, что ты ищешь...]];
-		[[Ты протягиваешь руки и вот оно -- в твоих руках! Зеркало из твоей комнаты. Ты выходишь из ледяного пламени.]];
+		[[Ты протягиваешь руки и вот -- ты уже держишь его! Зеркало из твоей комнаты. Ты выходишь из ледяного пламени.]];
 	};
 	exit = function(s)
 		take 'зеркало'
@@ -2679,7 +2679,7 @@ Verb {
 	"в|во {noun}/вн : Search",
 }
 
-function mp:Think()
+function mp:before_Think()
 	if here() ^ 'Тьма' then
 		return false
 	end
@@ -2705,7 +2705,12 @@ function mp:Think()
 	if here() ^ 'поле' then
 		p [[Тебе приходит в голову ]];
 		if not have 'телефон' or not have 'браслет' then
-			p [[осмотреть машину. Может быть в бардачке есть что-нибудь полезное?]]
+			p [[осмотреть машину.]]
+			if not _'бардачок':has'open' then
+				p [[Затем открыть бардачок.]]
+			else
+				p [[взять всё из бардачка.]]
+			end
 		elseif not have 'скрипка' then
 			p [[взять скрипку.]]
 		elseif not _'телефон'.compass then
@@ -2754,8 +2759,131 @@ function mp:Think()
 		return
 	end
 	if here() ^ 'пещера' then
+		p [[Тебе приходит в голову ]]
+		if mp:thedark() then
+			p [[посветить телефоном.]]
+		elseif disabled '#кристаллы' then
+			p [[осмотреть свечение.]]
+		elseif _'#кристаллы'.try < 2 then
+			p [[постучать по кристаллам.]]
+		elseif not _'#кристаллы'.broken then
+			p [[играть на скрипке.]]
+		elseif seen 'осколки' then
+			p [[взять осколки.]]
+		else
+			p [[идти на северо-запад.]]
+		end
+		return
 	end
-	p [[Тебе ничего не приходит в голову.]]
+	if here() ^ 'пещера2' then
+		p [[Тебе приходит в голову ]]
+		if not seen 'осколки' then
+			p [[бросить осколки.]]
+		elseif mp:thedark() then
+			p [[включить фонарик.]]
+		else
+			p [[идти на юго-запад.]]
+		end
+		return
+	end
+	if here() ^ 'обрыв' then
+		p [[Тебе приходит в голову перепрыгнуть через обрыв.]]
+		return
+	end
+	if here() ^ 'Другая сторона' then
+		p [[Тебе приходит в голову выйти наружу.]]
+		return
+	end
+	if here() ^ 'За ледяной стеной' then
+		p [[Тебе приходит в голову идти к скале.]]
+		return
+	end
+	if here() ^ 'У замка' then
+		p [[Тебе приходит в голову ]]
+		if disabled 'ворота' then
+			p [[дать перо статуе.]]
+		else
+			p [[войти внутрь.]]
+		end
+		return
+	end
+	if here() ^ 'Тронный зал' then
+		p [[Тебе приходит в голову ]]
+		if visited 'gotmirror' and not _'зеркало'.seen then
+			p [[посмотреть в зеркало.]]
+		elseif _'браслет':hasnt'worn' then
+			p [[надеть браслет.]]
+		elseif not _'Тронный зал'.near then
+			p [[подойти к матери.]]
+		elseif not _'королева'.queen then
+			p [[осмотреть мать.]]
+		elseif not visited 'королева-диалог' then
+			p [[поговорить с матерью.]]
+		elseif disabled 'дверь' then
+			p [[идти к голему.]]
+		elseif not visited 'gotmirror' then
+			p [[идти вниз.]]
+		elseif _'дверь':has'open' then
+			p [[идти в дверь.]]
+		else
+			p [[открыть дверь.]]
+		end
+		return
+	end
+	if here() ^ 'Зал с зеркалами' then
+		p [[Тебе приходит в голову ]]
+		if not _'Зал с зеркалами'.know then
+			p [[бросить перо.]]
+		elseif not have 'перо' then
+			p [[взять перо.]]
+		elseif visited 'gotmirror' then
+			p [[идти наверх.]]
+		else
+			p [[идти на запад.]]
+		end
+		return
+	end
+	if here() ^ 'ледяное-пламя' then
+		p [[Тебе приходит в голову ]]
+		if visited 'gotmirror' then
+			if not _'зеркало'.seen then
+				p [[посмотреть в зеркало.]]
+			else
+				p [[идти на восток.]]
+			end
+		elseif _'ледяное-пламя'.warm <= 5 then
+			p [[ждать.]]
+		else
+			p [[войти в пламя.]]
+		end
+		return
+	end
+	if here() ^ 'комната' then
+		p [[Тебе приходит в голову ]]
+		if seen 'королева2' then
+			p [[войти в зеркало.]]
+			return
+		end
+		if not visited 'gotmirror' or not _'зеркало'.seen then
+			p [[выйти.]]
+		elseif not seen 'зеркало' and not have 'зеркало' then
+			p [[идти и забрать зеркало оттуда, где ты его оставила.]]
+		elseif not _'сова2'.finside and _'сова2'.num < 3 then
+			p [[ждать.]]
+		elseif _'#окно':hasnt'open' and not _'сова2'.finside then
+			p [[открыть окно.]]
+		elseif not visited 'сова2-диалог1' and not visited 'сова2-диалог1' then
+			p [[поговорить с совой.]]
+		elseif not _'зеркало':where() ^ '#стена' then
+			p [[повесить зеркало на стену.]]
+		else
+			p [[поговорить с совой.]]
+		end
+		return
+	end
+	if here() ^ 'Тьма' then
+		return false
+	end
 	return false
 end
 
