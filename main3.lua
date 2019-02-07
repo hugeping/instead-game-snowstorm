@@ -2489,6 +2489,10 @@ obj {
 		end
 	end;
 	before_Search = function(s)
+		if here() ^ 'комната' and not _'сова2'.finside and not s.seen then
+			_'сова2'.num = 0
+			DaemonStart 'сова2'
+		end
 		s.seen = true
 		p [[Вместо своего отражения, ты видишь в зеркале свою маму! {$fmt em|Настоящую} маму.]];
 		if s:where() ^ '#стена' then
