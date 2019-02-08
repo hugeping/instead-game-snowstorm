@@ -139,6 +139,8 @@ local titles = {
 	{"http://instead.syscall.ru"},
 	{ };
 	{"Альфа тестирование:"},
+	{"techniX"},
+	{"Irremann"},
 	{"spline"},
 	{ };
 	{"Благодарности:", style = 2},
