@@ -77,6 +77,7 @@ game.pic = function(s)
 	local p = pictures[top]
 	if p:find("%-pan") then
 		if not spr then
+			instead.fading(true)
 			spr = sprite.new(p)
 			local w, h = spr:size()
 			local hh = tonumber(theme.get'scr.gfx.h')

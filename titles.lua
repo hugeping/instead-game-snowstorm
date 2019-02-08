@@ -5,6 +5,27 @@ require "decor"
 require "snd"
 --require "fading"
 
+obj {
+	nam = 'mplayer';
+	pos = 0;
+	{
+		playlist = {
+			'01.ogg';
+			'02.ogg';
+		}
+	};
+	life = function(s)
+		if snd.music_playing() then
+			return
+		end
+		s.pos = s.pos + 1
+		if s.pos > #s.playlist then
+			s.pos = 1
+		end
+		snd.music('mus/'..s.playlist[s.pos], 1);
+	end
+}
+
 declare 'flake' (function(v)
 	local sp = v.speed + rnd(2)
 	local sp2 = v.speed + rnd(4)
@@ -108,6 +129,8 @@ local titles = {
 	{"Коралина // Нил Гейман"},
 	{ };
 	{"Музыка:", style = 2},
+	{"Autumn: Meditativo by Dee Yan-Key"},
+	{"Winter is coming: Adagio - First Snow by Dee Yan-Key"},
 	{"Largo – from Concerto No 5 – J.S. Bach // Jon Sayles"},
 	{ };
 	{"Движок:", style = 2},
@@ -153,6 +176,7 @@ room {
 	end;
 	enter = function(s)
 		mp:clear()
+		lifeoff 'mplayer'
 		snd.music 'mus/largo.ogg'
 		s.font_height = 16
 		s.w, s.h = std.tonum(theme.get 'scr.w'), std.tonum(theme.get 'scr.h')
