@@ -57,6 +57,9 @@ function game:timer()
 	if spr then
 		local w, h = spr:size()
 		local ww, hh = spr_blank:size()
+		if spr_pos >= w - ww then
+			return false
+		end
 		spr_blank:fill('#ffffff')
 		spr:copy(spr_pos, 0, ww, hh, spr_blank)
 		if spr_pos < w - ww then
