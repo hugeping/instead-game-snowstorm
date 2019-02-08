@@ -1867,7 +1867,13 @@ room {
 	obj {
 		-"трон|кресло";
 		nam = "#трон";
-		['before_Enter,Climb'] = "Трон занят.";
+		['before_Enter,Climb'] = function(s)
+			if seen 'королева' then
+				p "Трон занят.";
+			else
+				p "Тебе не нужна власть. Тебе нужна мама.";
+			end
+		end;
 		description = [[Великолепный трон сделан, как и всё вокруг, из льда. Высокая прямая спинка украшена причудливыми узорами.]];
 		before_Walk = function(s)
 			if _'Тронный зал'.near then
