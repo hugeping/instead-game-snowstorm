@@ -54,17 +54,19 @@ local spr_blank
 local spr_pos = 0
 
 function game:timer()
-	if spr then
-		local w, h = spr:size()
-		local ww, hh = spr_blank:size()
-		if spr_pos >= w - ww then
-			return false
-		end
-		spr_blank:fill('#ffffff')
-		spr:copy(spr_pos, 0, ww, hh, spr_blank)
-		if spr_pos < w - ww then
-			spr_pos = spr_pos + 1
-		end
+	if not spr then
+		return false
+	end
+	local w, h = spr:size()
+	local ww, hh = spr_blank:size()
+	if spr_pos >= w - ww then
+		timer:stop()
+		return false
+	end
+	spr_blank:fill('#ffffff')
+	spr:copy(spr_pos, 0, ww, hh, spr_blank)
+	if spr_pos < w - ww then
+		spr_pos = spr_pos + 1
 	end
 	return false
 end
@@ -86,8 +88,9 @@ game.pic = function(s)
 			timer:set(50)
 			if not spr_blank then
 				spr_blank = sprite.new(theme.get'scr.gfx.w', theme.get'scr.gfx.h')
-				spr:copy(spr_blank)
 			end
+			local ww, hh = spr_blank:size()
+			spr:copy(0, 0, ww, hh, spr_blank)
 		end
 		return spr_blank
 	else
@@ -96,6 +99,8 @@ game.pic = function(s)
 end
 
 function pic_push(name)
+	spr = false
+	timer:stop()
 	instead.need_fading(true)
 	table.insert(pictures, name)
 end
