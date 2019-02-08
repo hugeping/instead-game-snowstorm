@@ -1239,6 +1239,7 @@ Area {
 		end;
 		nam = '#стена';
 		light = 0;
+		before_Taste = [[А язык не приклеится?]];
 		before_Climb = [[У тебя вряд ли это получится. Стена отвесная.]];
 		["before_Enter,Walk"] = function(s)
 			if s.light == 0 then
@@ -1602,6 +1603,7 @@ obj {
 		end
 	end;
 	nam = 'голем';
+	before_Taste = [[А язык не приклеится?]];
 	init_dsc = function(s)
 		if s:has'animate' then
 			p [[У стены стоит ледяной человек.]]
@@ -1682,6 +1684,7 @@ room {
 		nam = '#замок';
 		-"скала|гора|замок|дворец|стена";
 		description = [[Острые вершины скалы устремлены в небо.]];
+		before_Taste = [[А язык не приклеится?]];
 		obj = { 'ворота' };
 		['before_Enter,Walk,Climb'] = function(s)
 			if disabled 'ворота' then
