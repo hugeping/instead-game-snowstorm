@@ -142,6 +142,7 @@ local titles = {
 	{"techniX"},
 	{"Irremann"},
 	{"spline"},
+	{"Boris Timofeev"},
 	{ };
 	{"Благодарности:", style = 2},
 	{"Семье (за терпение)" },
