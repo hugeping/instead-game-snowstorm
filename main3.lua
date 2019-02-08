@@ -5,7 +5,6 @@ require "mp-ru"
 require "fmt"
 fmt.dash = true
 fmt.quotes = true
--- loadmod "fading"
 -- mp.errhints = false
 game.dsc = [[Простая игра написанная специально для ЗОК-2019.]]
 
