@@ -805,7 +805,10 @@ obj {
 		s.step = 4
 		p [[Олень попятился и шумно задышал, жадно втягивая морозный воздух.]]
 	end;
-	['life_Give,Show'] = function(s)
+	['life_Give,Show'] = function(s, w)
+		if not w ^ 'перо' then
+			return false
+		end
 		if s.sit then
 			p [[Олень никак не отреагировал.]]
 			return
