@@ -181,11 +181,11 @@ room {
 		mp:clear()
 		lifeoff 'mplayer'
 		snd.music 'mus/largo.ogg'
-		s.font_height = 16
+		s.font_height = tonumber(theme.get 'win.fnt.size')
 		s.w, s.h = std.tonum(theme.get 'scr.w'), std.tonum(theme.get 'scr.h')
 		D()
 		for i = 1, 200 do
-			D {"flake"..tostring(i), 'img', flake_spr, process = flake, x = -rnd(theme.scr.w()), y = -rnd(theme.scr.h()), speed = rnd(5), z = 1 }
+			D {"flake"..tostring(i), 'img', flake_spr, process = flake, x = -rnd(theme.scr.w()), y = -rnd(theme.scr.h()), speed = rnd(5), z = -2 }
 		end
 		anim'titles'
 --		fading.set {"crossfade", max = FADE_LONG }
@@ -209,7 +209,7 @@ room {
 		end
 		local x, y, w, h = theme.get 'win.x', theme.get 'win.y', theme.get 'win.w', theme.get 'win.h'
 		x, y, w, h = tonumber(x), tonumber(y), tonumber(w), tonumber(h)
-		D{ 'text'..tostring(s.pos), "txt", titles[s.pos][1], w = w, x = x, xc = false, y = theme.scr.h(), process = move_up, z = 1, style = titles[s.pos].style, size = 16 };
+		D{ 'text'..tostring(s.pos), "txt", titles[s.pos][1], w = w, x = x, xc = false, y = theme.scr.h(), process = move_up, z = -1, style = titles[s.pos].style, size = s.font_height };
 		return false
 	end;
 }
