@@ -525,7 +525,7 @@ function mp:Light(w)
 	if mp:check_held(w) then
 		return
 	end
-	p "{#First} не {#if_hint/#second,plural,могут,может} светить."
+	p "{#First} не {#if_hint/#first,plural,могут,может} светить."
 end
 
 function mp:Knock(w)
@@ -1429,6 +1429,7 @@ room {
 			end
 			return false
 		end;
+		before_Light = [[Свет испускаемый осколками очень тусклый для этого.]]'
 	}:attr 'luminous':disable();
 }
 
