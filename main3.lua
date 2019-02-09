@@ -510,7 +510,12 @@ Verb {
 	'[|по|под]свети/ть,[|по|свеч/у,освети/ть';
 	'{noun}/тв,held : Light'
 }
-
+VerbHint (
+	'#Light',
+	function(s)
+		return mp:thedark() and have 'телефон'
+	end
+)
 function mp:Light(w)
 	if mp:check_held(w) then
 		return
@@ -1614,6 +1619,15 @@ obj {
 		else
 			p [[Твоё внимание привлекает огромная ледяная статуя.]]
 		end
+	end;
+	before_Any = function(s, e)
+		if e == 'Exam' or e == 'Walk' or e == 'Climb' or e == 'Enter' then
+			return false
+		end
+		if not disabled 'дверь' or not visited 'королева-диалог' then
+			return false
+		end
+		p [[Сначала к голему нужно подойти.]]
 	end;
 	description = function(s)
 		if s:has'animate' then
@@ -3098,4 +3112,4 @@ Verb {
 	"~ {noun}/дт,scene {noun}/вн,held : Give reverse",
 }
 
-game.hint_verbs = { "#Exam", "#Drop", "#LookIn", "#ThrowAt", "#Walk", "#Take", "#Play", "#Give", "#Touch", "#Attack2", "#Talk", "#Cry", "#Open", "#Close", "#Jump", "#Wait", "#Wear", "#Sit", "#Exit", "#SwitchOn", "#SwitchOff", "#PutOn" }
+game.hint_verbs = { "#Exam", "#Drop", "#LookIn", "#ThrowAt", "#Walk", "#Take", "#Play", "#Give", "#Touch", "#Attack2", "#Talk", "#Cry", "#Open", "#Close", "#Jump", "#Wait", "#Wear", "#Sit", "#Exit", "#SwitchOn", "#SwtchOff", "#PutOn", "#Light" }
