@@ -1429,7 +1429,7 @@ room {
 			end
 			return false
 		end;
-		before_Light = [[Свет испускаемый осколками очень тусклый для этого.]]'
+		before_Light = [[Свет испускаемый осколками очень тусклый для этого.]];
 	}:attr 'luminous':disable();
 }
 
