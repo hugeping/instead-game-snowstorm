@@ -72,12 +72,13 @@ function game:timer()
 end
 
 game.pic = function(s)
+	local mobile = theme.name():find("^%.mobile")
 	local top = #pictures
 	if top == 0 then
 		return false
 	end
 	local p = pictures[top]
-	if p:find("%-pan") then
+	if p:find("%-pan") and not mobile then
 		if not spr then
 			instead.fading(true)
 			spr = sprite.new(p)
@@ -102,6 +103,9 @@ function pic_push(name)
 	spr = false
 	timer:stop()
 	instead.need_fading(true)
+	if theme.name():find("^%.mobile") then
+		mp:clear()
+	end
 	table.insert(pictures, name)
 end
 
@@ -125,6 +129,9 @@ function pic_set(name)
 	end
 	pictures[top] = name
 	instead.need_fading(true)
+	if theme.name():find("^%.mobile") then
+		mp:clear()
+	end
 	spr = false
 	timer:stop()
 end

@@ -453,6 +453,11 @@ obj {
 	before_Give = function(s, w)
 		if w ^ '#мама' then
 			p [[Ты протягиваешь телефон матери, она молча забирает его и кладёт в бардачок.]]
+			if not s.seen then
+				s.seen = true
+				s:daemonStop()
+				p [[^Мать выглядит немного удивлённой -- ведь ты обычно тяжело расстаёшься со своим смартфоном.]]
+			end
 			move(s, 'бардачок')
 			pic_set 'img/4.png'
 			return
