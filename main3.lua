@@ -562,6 +562,27 @@ Verb {
 	'{noun}/вн : Tune',
 }
 
+function mp:Photo()
+	if not have 'телефон' then
+		p [[Дебе нечем делать снимки.]];
+	elseif mp:thedark() then
+		p [[Нет света. Может быть, посветить телефоном?]]
+	else
+		local t = {
+			[[Ты делаешь пару неудачных фоток и удаляешь их из телефона.]];
+			[[Ты сделала удачную фотку.]];
+			[[Ты сделала пару фоток и селфи.]];
+		}
+		p(t[rnd(#t)])
+	end
+end
+
+Verb {
+	'#Photo';
+	'[|с|по]фото/графировать';
+	'Photo';
+}
+
 function start(load)
 	if not load then
 ----		fading.set {'fadeblack', max = 64, delay = 25 };
