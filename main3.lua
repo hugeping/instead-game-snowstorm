@@ -121,19 +121,19 @@ room {
 			"Машину слегка заносит на снежной дороге.";
 		}
 		if blizzard >= 2 then
-			if blizzard < 7 then
+			blizzard = blizzard + 1
+			if blizzard < 7 and blizzard > 3 then
 				pic_set 'img/2-pan.png'
 			end
-			blizzard = blizzard + 1
 			if blizzard > 5 then
 				enable '#заправка'
 				disable '#метель'
 				if blizzard == 7 then
-					pic_set 'img/7.png'
 					p [[Мать заглушила двигатель.]]
 					return
 				end
 				if blizzard == 8 then
+					pic_set 'img/7.png'
 					p [[-- Подожди меня, я скоро вернусь. -- говорит тебе мать и выходит из машины, захлопывая за собой дверь.]];
 					remove '#мама'
 					return
@@ -229,7 +229,7 @@ room {
 		-"окно,стекло";
 		nam = '#окно';
 		before_Open = "Слишком холодно, чтобы опускать стекло.";
-		['before_Search,Exam'] = function()
+		['before_Search,Exam'] = function(s)
 			if not disabled '#заправка' then
 				p [[За стеклом ты видишь смутный силуэт заправки.]];
 				return
@@ -246,6 +246,9 @@ room {
 				return
 			end
 			p [[Ты видишь, как за стеклом кружится метель.]];
+			if s:once() then
+				pic_set 'img/2-pan.png'
+			end
 		end;
 	}:attr 'scenery,openable';
 	Prop {

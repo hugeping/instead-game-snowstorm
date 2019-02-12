@@ -79,7 +79,7 @@ game.pic = function(s)
 		return false
 	end
 	local p = pictures[top]
-	if p:find("%-pan") and not mobile then
+	if (p:find("%-pan") or p:find("%-PAN")) and not mobile then
 		if not spr then
 			instead.fading(true)
 			spr = sprite.new(p)
