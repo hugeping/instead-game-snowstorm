@@ -1,5 +1,5 @@
 --$Name:Метель$
---$Author:Peter Kosyh$
+--$Author:Peter Kosyh & Pacowacz$
 --$Version:1.0$
 require "mp-ru"
 require "fmt"
@@ -633,7 +633,8 @@ Title {
 	nam = 'метель2';
 	text = {
 		[[{$fmt y,50%}{$fmt c|{$fmt b|МЕТЕЛЬ}}^^
-{$fmt c|Игра на ЗОК-2019}]];
+{$fmt c|Игра на ЗОК-2019}^^^
+{$fmt em|{$fmt c|Код: Пётр Косых^Графика: Pakowacz}}]];
 	};
 	next_to = 'поле';
 	exit = function(s)
