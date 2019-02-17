@@ -613,8 +613,11 @@ end
 cutscene {
 	nam = "метель1";
 	title = false;
+	exit = function(s)
+		pic_set('img/81.png')
+	end;
 	enter = function(s)
-		pic_set('img/8.png')
+		pic_set('img/75.png')
 		if std.ref'mplayer' then
 			lifeon 'mplayer'
 		end
