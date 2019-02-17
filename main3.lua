@@ -22,7 +22,7 @@ include "pic"
 cutscene {
 	nam = 'intro';
 	enter = function()
-		pic_set('img/1.png')
+		pic_set('1')
 	end;
 	text = {
 		[[Старенький синий седан едет по заснеженной трассе. Внутри машины -- двое.^^
@@ -123,7 +123,7 @@ room {
 		if blizzard >= 2 then
 			blizzard = blizzard + 1
 			if blizzard < 7 and blizzard > 3 then
-				pic_set 'img/2-pan.png'
+				pic_set '2-pan'
 			end
 			if blizzard > 5 then
 				enable '#заправка'
@@ -133,7 +133,7 @@ room {
 					return
 				end
 				if blizzard == 8 then
-					pic_set 'img/7.png'
+					pic_set '7'
 					p [[-- Подожди меня, я скоро вернусь. -- говорит тебе мать и выходит из машины, захлопывая за собой дверь.]];
 					remove '#мама'
 					return
@@ -190,7 +190,7 @@ room {
 					end
 					p [[-- Мама! Посмотри, там справа. Что то странное...^]]
 					p [[-- Не отвлекай меня от дороги!]]
-					pic_set 'img/6.png'
+					pic_set '6'
 					blizzard = 2
 					return
 				end
@@ -239,7 +239,7 @@ room {
 					pn [[Разглядывая белоснежный пейзаж, ты замечаешь вдали нечто странное.]]
 					enable '#метель'
 					blizzard = 1
-					pic_set 'img/5.png'
+					pic_set '5'
 				end
 				pn [[Ты видишь, как по земле ползут огромные клубы пара или снега.]]
 				p [[Огромная снежная буря, накрывая деревья, движется к трассе!]]
@@ -247,7 +247,7 @@ room {
 			end
 			p [[Ты видишь, как за стеклом кружится метель.]];
 			if s:once() then
-				pic_set 'img/2-pan.png'
+				pic_set '2-pan'
 			end
 		end;
 	}:attr 'scenery,openable';
@@ -262,7 +262,7 @@ dlg {
 	nam = 'разговор1';
 	title = false;
 	enter = function()
-		pic_set('img/3.png')
+		pic_set('3')
 	end;
 	phr = {
 		[[-- Я говорю, тебе там понравится. Там хорошая школа, я узнавала... И музыкальная школа совсем недалеко. -- ты слышишь в голосе матери настойчивость.]];
@@ -459,7 +459,7 @@ obj {
 				p [[^Мать выглядит немного удивлённой -- ведь ты обычно тяжело расстаёшься со своим смартфоном.]]
 			end
 			move(s, 'бардачок')
-			pic_set 'img/4.png'
+			pic_set '4'
 			return
 		end
 		return false
@@ -614,10 +614,10 @@ cutscene {
 	nam = "метель1";
 	title = false;
 	exit = function(s)
-		pic_set('img/81.png')
+		pic_set('81')
 	end;
 	enter = function(s)
-		pic_set('img/75.png')
+		pic_set('75')
 		if std.ref'mplayer' then
 			lifeon 'mplayer'
 		end
@@ -641,7 +641,7 @@ Title {
 	};
 	next_to = 'поле';
 	exit = function(s)
-		pic_set('img/20-pan.png')
+		pic_set('20-pan')
 	end
 }
 
@@ -917,7 +917,7 @@ local function forest_scenery(s)
 	elseif s.depth == 3 then
 		enable '#поляна'
 		enable 'олень'
-		pic_set 'img/22.png'
+		pic_set '22'
 		_'олень'.step = 0
 		_'олень'.sit = false
 		_'олень':daemonStart()
@@ -1145,7 +1145,7 @@ dlg {
 	nam = 'разговор с совой';
 	title = false;
 	enter = function(s)
-		pic_set 'img/21.png'
+		pic_set '21'
 	end;
 	exit = function()
 --		pic_pop()
@@ -1249,7 +1249,7 @@ Area {
 	in_to = '#стена';
 	onexit = function(s, t)
 		if t ^ 'пещера' and not visited 'пещера' then
-			pic_set 'img/23-pan.png'
+			pic_set '23-pan'
 		end
 	end;
 	['nw_to,sw_to,n_to,s_to'] = function(s)
@@ -1373,7 +1373,7 @@ room {
 			return false
 		end
 		_'#кристаллы'.broken = true
-		pic_set 'img/24.png'
+		pic_set '24'
 		p [[Интересно... А что если? Не успев додумать мысль, ты уже берёшь скрипку в руки.^^
 Ты извлекаешь "ми" второй октавы. Сначала ничего не происходит, но затем ты слышишь, как странный кристалл отзывается
 на звук твоей скрипки.^^
@@ -1717,7 +1717,7 @@ room {
 	in_to = '#замок';
 	onenter = function(s)
 		if not visited(s) then
-			pic_set 'img/25.png'
+			pic_set '25'
 		end
 	end;
 	dsc = function(s)
@@ -1897,7 +1897,7 @@ room {
 			pn [[-- Я ждала тебя! Подойди же и поцелуй меня! -- голос матери, отраженный от ледяных стен зала показался тебе чужим.]]
 			DaemonStart 'королева'
 			remove 'сова'
-			pic_set 'img/30.png'
+			pic_set '30'
 		end
 	end;
 	dsc = function(s)
@@ -2053,7 +2053,7 @@ cutscene {
 	nam = 'badend';
 	title = 'Конец';
 	onenter = function()
-		pic_push 'img/99.png'
+		pic_push '99'
 	end;
 	exit = function()
 		pic_pop()
@@ -2071,7 +2071,7 @@ cutscene {
 cutscene {
 	nam = 'badend2';
 	onenter = function()
-		pic_push 'img/99.png'
+		pic_push '99'
 	end;
 	exit = function()
 		pic_pop()
@@ -2092,7 +2092,7 @@ dlg {
 	nam = 'сова2-диалог1';
 	title = false;
 	enter = function(s)
-		pic_set 'img/21.png'
+		pic_set '21'
 	end;
 	phr = {
 		[[-- Я хочу помочь тебе, дитя. -- сказала странная птица.]];
@@ -2111,7 +2111,7 @@ dlg {
 	nam = 'сова2-диалог2';
 	title = false;
 	enter = function(s)
-		pic_set 'img/21.png'
+		pic_set '21'
 	end;
 	phr = {
 		[[-- Итак, дитя, ты уже поняла, что твоя мама находится в нормальном мире? А ты -- за зеркалом?]];
@@ -2196,7 +2196,7 @@ dlg {
 	nam = 'сова2-диалог3';
 	title = false;
 	enter = function(s)
-		pic_set 'img/21.png'
+		pic_set '21'
 	end;
 	phr = {
 		[[-- Итак, дитя, что ты решила? Ты отдашь мне свои глаза?]];
@@ -2634,7 +2634,7 @@ cutscene {
 	nam = 'badend3';
 	title = 'Конец';
 	onenter = function()
-		pic_push 'img/99.png'
+		pic_push '99'
 	end;
 	exit = function()
 		pic_pop()
@@ -2729,10 +2729,10 @@ cutscene {
 	nam = 'happyend';
 	title = "Конец";
 	onenter = function(s)
-		pic_set 'img/31.png'
+		pic_set '31'
 	end;
 	exit = function(s)
-		pic_set 'img/blizzard.png'
+		pic_set 'blizzard'
 	end;
 	text = {
 		[[-- Ты что -- совсем рехнулась?]];

@@ -41,7 +41,7 @@ room {
 	dsc = titles;
 	noparser = true;
 	enter = function(s)
-		pic_set 'img/blizzard.png'
+		pic_set 'blizzard'
 		snd.music 'mus/largo.ogg'
 	end;
 }
@@ -101,6 +101,7 @@ game.pic = function(s)
 end
 
 function pic_push(name)
+	name = 'img/'..name .. '.png'
 	spr = false
 	timer:stop()
 	instead.need_fading(true)
@@ -125,6 +126,7 @@ function pic_set(name)
 	if top == 0 then
 		return pic_push(name)
 	end
+	name = 'img/'..name .. '.png'
 	if pictures[top] == name then
 		return
 	end
