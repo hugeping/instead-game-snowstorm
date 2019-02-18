@@ -15,7 +15,10 @@ Pakowacz^^
 Коралина // Нил Гейман^^
 
 {$fmt em|Музыка:}^
-Largo – from Concerto No 5 – J.S. Bach // Jon Sayles^^
+Autumn: Meditativo by Dee Yan-Key^
+Winter is coming: Adagio - First Snow by Dee Yan-Key^
+Largo – from Concerto No 5 – J.S. Bach // Jon Sayles^
+J.S. Bach: Partia No.2 - Allemande // Scott Slapin^^
 
 {$fmt em|Движок:}^
 INSTEAD3: МЕТАПАРСЕР3 // Пётр Косых^^
@@ -23,7 +26,10 @@ INSTEAD3: МЕТАПАРСЕР3 // Пётр Косых^^
 http://instead.syscall.ru^^
 
 {$fmt em|Альфа тестирование:}^
-spline^^
+techniX^
+Irremann^
+spline^
+Борис Тимофеев^^
 
 {$fmt em|Благодарности:}^
 Семье (за терпение)^

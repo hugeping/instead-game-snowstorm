@@ -132,6 +132,7 @@ local titles = {
 	{"Autumn: Meditativo by Dee Yan-Key"},
 	{"Winter is coming: Adagio - First Snow by Dee Yan-Key"},
 	{"Largo – from Concerto No 5 – J.S. Bach // Jon Sayles"},
+	{"J.S. Bach: Partia No.2 - Allemande // Scott Slapin"},
 	{ };
 	{"Движок:", style = 2},
 	{"INSTEAD3: МЕТАПАРСЕР3 // Пётр Косых"},
