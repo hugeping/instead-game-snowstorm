@@ -11,7 +11,7 @@ obj {
 	{
 		playlist = {
 			'01.ogg';
-			'02.ogg';
+--			'02.ogg';
 		}
 	};
 	life = function(s)
@@ -130,7 +130,7 @@ local titles = {
 	{ };
 	{"Музыка:", style = 2},
 	{"Autumn: Meditativo by Dee Yan-Key"},
-	{"Winter is coming: Adagio - First Snow by Dee Yan-Key"},
+--	{"Winter is coming: Adagio - First Snow by Dee Yan-Key"},
 	{"Largo – from Concerto No 5 – J.S. Bach // Jon Sayles"},
 	{"J.S. Bach: Partia No.2 - Allemande // Scott Slapin"},
 	{ };

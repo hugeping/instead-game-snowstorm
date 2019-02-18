@@ -16,7 +16,6 @@ Pakowacz^^
 
 {$fmt em|Музыка:}^
 Autumn: Meditativo by Dee Yan-Key^
-Winter is coming: Adagio - First Snow by Dee Yan-Key^
 Largo – from Concerto No 5 – J.S. Bach // Jon Sayles^
 J.S. Bach: Partia No.2 - Allemande // Scott Slapin^^
 
