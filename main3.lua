@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pacowacz$
---$Version:1.0$
+--$Version:1.1$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -3178,6 +3178,10 @@ function mp:before_Think()
 	end
 	return false
 end
+end
+
+function mp:Sing()
+	p [[То, что ты учишься в музыкальной школе не означает, что ты хорошо поёшь.]]
 end
 
 function mp:Ring()
