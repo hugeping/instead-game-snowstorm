@@ -106,7 +106,7 @@ game.pic = function(s)
 end
 
 function pic_push(name)
-	name = 'img/'..name .. '.png'
+	name = 'img/'..name .. '.jpg'
 	spr = false
 	timer:stop()
 	instead.need_fading(true)
@@ -131,7 +131,7 @@ function pic_set(name)
 	if top == 0 then
 		return pic_push(name)
 	end
-	name = 'img/'..name .. '.png'
+	name = 'img/'..name .. '.jpg'
 	if pictures[top] == name then
 		return
 	end
