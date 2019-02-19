@@ -46,7 +46,7 @@ room {
 	dsc = titles;
 	noparser = true;
 	enter = function(s)
-		pic_set 'blizzard'
+		pic_set '81'
 		snd.music 'mus/largo.ogg'
 	end;
 }

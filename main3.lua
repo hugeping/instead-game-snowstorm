@@ -2732,7 +2732,7 @@ cutscene {
 		pic_set '31'
 	end;
 	exit = function(s)
-		pic_set 'blizzard'
+		pic_set '81'
 	end;
 	text = {
 		[[-- Ты что -- совсем рехнулась?]];
