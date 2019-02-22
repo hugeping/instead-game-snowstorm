@@ -651,7 +651,7 @@ obj {
 	dsc = [[В снегу стоит машина.]];
 	before_SwitchOn = [[Тебе не удаётся завести машину. Впрочем, ты все-равно не умеешь водить.]];
 	before_SwitchOff = [[Двигатель не работает.]]
-}:attr 'container,openable,open,static,enterable':with {
+}:attr 'container,openable,open,static,enterable,light':with {
 	obj {
 		nam = 'радио';
 		-"радио";
