@@ -546,10 +546,20 @@ function mp:Cry(w)
 	p [[Это тебе не поможет.]]
 end
 
+function mp:Fun(w)
+	p [[Ты глупо смеёшься.]]
+end
+
 Verb {
 	"#Cry",
 	"[|по|за]крич/ать,крикн/уть,[|за|по]плак/ать,[|за|по]плач/ь",
 	": Cry"
+}
+
+Verb {
+	"#Fun",
+	"[|по|рас|за]смеяться,[|по|за|рас]смей/ся,[|по|за|рас]смею/сь,[|по|за|рас]хохо/таться",
+	": Fun"
 }
 
 Verb {
@@ -2445,9 +2455,12 @@ room {
 			p(t[rnd(#t)])
 		end
 	end;
-	['after_Drop,ThrowAt'] = function(s, w)
+	['before_Drop,ThrowAt'] = function(s, w)
 		if not w ^ 'перо' then
 			return false
+		end
+		if mp:check_held(w) then
+			return
 		end
 		if s.know then
 			p [[Ты снова выпускаешь перо из рук и убеждаешься ещё раз, что метель дует с запада.]];
@@ -2535,7 +2548,7 @@ room {
 		['before_Push,Pull,Transfer'] = [[Стоит ли это делать?]];
 	}:attr 'scenery';
 	obj {
-		-"снежинки|метель";
+		-"снежинки|метель|ветер";
 		description = [[Интересно, откуда здесь снег? Странно, но тебе кажется, что метель дует с определённого направления...]];
 		before_Listen = [[Тихо...]];
 	}:attr'scenery';
