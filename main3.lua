@@ -648,14 +648,10 @@ Title {
 obj {
 	-"машина";
 	nam = 'машина';
-	dsc = function(s)
-		p [[В снегу стоит машина.]];
-		if inside('перо', s) then
-			_'перо':dsc()
-		end
-	end;
-	before_Enter = [[Сначала нужно найти мою маму.]];
-}:attr 'container,openable,open,static':with {
+	dsc = [[В снегу стоит машина.]];
+	before_SwitchOn = [[Тебе не удаётся завести машину. Впрочем, ты все-равно не умеешь водить.]];
+	before_SwitchOff = [[Двигатель не работает.]]
+}:attr 'container,openable,open,static,enterable':with {
 	obj {
 		nam = 'радио';
 		-"радио";
@@ -753,6 +749,13 @@ Sky = Class {
 Area {
 	nam = 'поле';
 	-"поле";
+	before_Walk = function(s)
+		if where(pl) ^ 'машина' then
+			p [[Машина не заводится. Придётся выйти и идти пешком.]]
+			return
+		end
+		return false
+	end;
 	before_Cry = [[-- Ма-маааааа! -- нет ответа.]];
 	onenter = function(s)
 		if visited(s) then
@@ -1124,13 +1127,7 @@ Area {
 obj {
 	-"перо";
 	nam = 'перо';
-	dsc = function(s)
-		if where(s) ^'машина' then
-			p [[На крыше машины лежит белое перо.]]
-			return
-		end
-		return false
-	end;
+	init_dsc = [[На крыше машины лежит белое перо.]];
 	before_Exam = function(s)
 		p [[Белое перо.]]
 		if have(s) then
@@ -1191,7 +1188,8 @@ dlg {
 				"Это далеко?";
 				function(s)
 					p "-- Расстояние -- всего лишь время. А время здесь замёрзло. Возьми перо. По нему тебя узнают другие слуги госпожи.";
-					move ('перо', 'машина')
+					move ('перо', 'поле')
+					_'перо':attr '~moved'
 					_'сова'.talked = true
 					walkout()
 				end;
@@ -3203,6 +3201,12 @@ Verb {
 	"#Ring",
 	"[|по]звон/ить",
 	"Ring",
+}
+
+Verb {
+	"#SwitchOn2",
+	"завести/,завед/и",
+	"~ {noun}/вн :SwitchOn",
 }
 
 Verb {
