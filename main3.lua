@@ -1272,7 +1272,7 @@ Area {
 			p "На деревьях лежит снег.";
 		end;
 		['before_Walk,Enter,Climb'] = function(s)
-			p "В этом лесу можно ходит вечность.";
+			p "В этом лесу можно ходить вечность.";
 		end;
 	}:attr 'scenery';
 	Snow { nam = '#снег' };
