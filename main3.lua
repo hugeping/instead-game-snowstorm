@@ -648,7 +648,12 @@ Title {
 obj {
 	-"машина";
 	nam = 'машина';
-	dsc = [[В снегу стоит машина.]];
+	dsc = function(s)
+		p [[В снегу стоит машина.]];
+		if _'перо':where() == s and _'перо':hasnt 'moved' then
+			_'перо':init_dsc()
+		end
+	end;
 	before_SwitchOn = [[Тебе не удаётся завести машину. Впрочем, ты все-равно не умеешь водить.]];
 	before_SwitchOff = [[Двигатель не работает.]]
 }:attr 'container,openable,open,static,enterable,light':with {
@@ -1127,7 +1132,12 @@ Area {
 obj {
 	-"перо";
 	nam = 'перо';
-	init_dsc = [[На крыше машины лежит белое перо.]];
+	init_dsc = function(s)
+		if s:hasnt 'moved' and where(pl) ^ 'машина' then
+			return
+		end
+		p [[На крыше машины лежит белое перо.]];
+	end;
 	before_Exam = function(s)
 		p [[Белое перо.]]
 		if have(s) then
@@ -1188,7 +1198,7 @@ dlg {
 				"Это далеко?";
 				function(s)
 					p "-- Расстояние -- всего лишь время. А время здесь замёрзло. Возьми перо. По нему тебя узнают другие слуги госпожи.";
-					move ('перо', 'поле')
+					move ('перо', 'машина')
 					_'перо':attr '~moved'
 					_'сова'.talked = true
 					walkout()
