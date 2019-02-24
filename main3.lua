@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pacowacz$
---$Version:1.1$
+--$Version:1.2$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -663,6 +663,14 @@ obj {
 		if _'перо':where() == s and _'перо':hasnt 'moved' then
 			_'перо':init_dsc()
 		end
+	end;
+	after_Close = function(s)
+		if _'перо':inside(s) then
+			p [[Когда ты захлопнула дверь машины, перо упало с крыши в снег.]]
+			move('перо', here())
+			return
+		end
+		return false
 	end;
 	before_SwitchOn = [[Тебе не удаётся завести машину. Впрочем, ты все-равно не умеешь водить.]];
 	before_SwitchOff = [[Двигатель не работает.]]
