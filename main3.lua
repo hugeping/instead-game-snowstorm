@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pacowacz$
---$Version:1.3$
+--$Version:1.4$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -1570,7 +1570,7 @@ room {
 	obj {
 		-"отверстия|дырки|дыры";
 		before_Receive = [[Не стоит туда соваться.]];
-		description = [[Тебе приходит в голову, что эти отверсия могут быть норами. Лучше держаться от них подальше.]];
+		description = [[Тебе приходит в голову, что эти отверстия могут быть норами. Лучше держаться от них подальше.]];
 	}:attr'scenery,container'
 }
 room {
