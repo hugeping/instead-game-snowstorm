@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pacowacz$
---$Version:1.2$
+--$Version:1.3$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -1474,7 +1474,7 @@ room {
 				p [[Звенящий звук кристалла долго отражается от ледяных стен. Ты чувствуешь вибрацию.]]
 			end
 		end;
-	}:attr 'luminous,scenery':disable();
+	}:attr 'luminous,static':disable();
 	obj {
 		-"осколки кристалла,осколок*|осколки|кусочки|куски";
 		nam = 'осколки';
