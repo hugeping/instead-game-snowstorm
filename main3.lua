@@ -665,9 +665,9 @@ obj {
 		end
 	end;
 	after_Close = function(s)
-		if _'перо':inside(s) then
+		if _'перо':inside(s) and not have 'перо' then
 			p [[Когда ты захлопнула дверь машины, перо упало с крыши в снег.]]
-			move('перо', here())
+			move('перо', 'поле')
 			return
 		end
 		return false
