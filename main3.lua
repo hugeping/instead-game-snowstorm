@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
---$Version:1.8$
+--$Version:1.9$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -1023,7 +1023,7 @@ Area {
 			p [[^Ты можешь идти так целую вечность...]]
 		end
 	end;
-	['s_to,n_to'] = function(s)
+	['s_to,n_to'] = function(s, t)
 		if check_compass(t) then
 			return
 		end
