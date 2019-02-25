@@ -825,6 +825,9 @@ Area {
 		end
 	end;
 	["n_to,ne_to,e_to,se_to,s_to"] = function(s, t)
+		if mp.event == 'Exam' then
+			return false
+		end
 		if check_compass('w_to') then
 			return
 		end
