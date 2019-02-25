@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pacowacz$
---$Version:1.4$
+--$Version:1.5$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -2605,8 +2605,10 @@ room {
 		if _'браслет':has'worn' then
 			s.warm = s.warm + 1
 			if s.warm == 3 then
+				p [[Ты чувствуешь как браслет согревает твою руку.]]
+			elseif s.warm == 4 then
 				p [[Ты чувствуешь как от браслета на твоей руке, по телу начинает разливаться тепло.]]
-			elseif s.warm == 4 or s.warm == 5 then
+			elseif s.warm == 5 then
 				p [[Ты чувствуешь как от браслета на твоей руке, по телу разливается тепло.]]
 			elseif s.warm > 5 then
 				p [[Ты чувствуешь как браслет согревает тебя.]]
@@ -2640,7 +2642,13 @@ room {
 			-"сияние|пламя|огонь|свечение";
 			dsc = [[На постаменте пылает ледяное пламя.]];
 			before_Take = [[Это невозможно взять.]];
-			before_Default = [[Как ты сделаешь это?]];
+			before_Default = function(s, ev, w)
+				if ev == 'ThrownAt' or ev == 'Receive' then
+					p ([[Тебе жаль расстоваться с ]], w:noun'тв', '.')
+				else
+					p [[Как ты сделаешь это?]];
+				end
+			end;
 			before_Listen = [[Ты слышишь потрескивание.]];
 			before_Touch = function(s)
 				if here().warm <= 5 then
@@ -2706,6 +2714,13 @@ obj {
 		end
 		if seen 'королева2' then
 			p [[Поверхность зеркала сияет фиолетовым светом.]]
+		end
+	end;
+	before_Touch = function(s)
+		if seen 'королева2' then
+			p [[Твоя рука свободно проходит сквозь поверхность зеркала.]]
+		else
+			return false
 		end
 	end;
 	before_Take = function(s)
