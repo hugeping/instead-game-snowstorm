@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
---$Version:1.6$
+--$Version:1.7$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -43,6 +43,13 @@ obj {
 		if s:once() then
 			p [[Странно, что он оказался в бардачке... Ты думала, что он давно потерялся.]]
 		end
+	end;
+	before_Give = function(s, w)
+		if w ^ 'королева' then
+			walk 'badend4'
+			return
+		end
+		return false
 	end;
 	before_Disrobe = function(s)
 		if visited 'gotmirror' then
@@ -439,7 +446,7 @@ obj {
 			if not s.compass then
 				p [[Странно, нет приёма...]]
 			end
-			if here()^'поле' then
+			if here()^'поле' or here()^'В лесу' then
 				if not s.compass then
 					p [[Но в твоём смартфоне есть компас. И, похоже, он работает! Теперь ты можешь ориентироваться по сторонам света.]]
 					s.compass = true
@@ -993,6 +1000,9 @@ Area {
 		end
 	end;
 	['w_to,nw_to,sw_to'] = function(s, t)
+		if check_compass(t) then
+			return
+		end
 		s.depth = s.depth + 1
 		if s.depth > 8 then s.depth = 6 + rnd(3) end
 		forest_scenery(s)
@@ -1003,6 +1013,9 @@ Area {
 		end
 	end;
 	['s_to,n_to'] = function(s)
+		if check_compass(t) then
+			return
+		end
 		if s.depth <= 1 then
 			p [[Ты решила, что идти вдоль границы леса не очень хорошая идея.]]
 		else
@@ -1900,7 +1913,7 @@ room {
 		p [[Сначала нужно подойти к трону.]]
 	end;
 	onexit = function(s, to)
-		if to ^ 'королева-диалог' or to ^ 'badend2' then
+		if to ^ 'королева-диалог' or to ^ 'badend2' or to ^ 'badend4' then
 			return
 		end
 		if not s.near then
@@ -2114,6 +2127,28 @@ cutscene {
 	title = false;
 	text = {
 		[[-- Не бойся меня, беззащитное дитя. Я вижу, что на тебе нет {$fmt em|её} талисмана. Это луче для нас обеих, всё закончится быстро...^^
+		И все сомнения вдруг уходят. Чувствуя в глубине ужас, ты поднимаешься по ступенькам пьедестала и обнимаешь свою мать.^^
+		От неё веет холодом, который сковывает тебя, и ты уже ничего не можешь изменить.^^
+		Ты смотришь внутрь черных дыр-глаз Снежной Королевы...^^
+		{$fmt b|{$fmt c|КОНЕЦ}}]];
+		[[{$fmt r|{$fmt em|Но всё могло закончиться по другому...}}]];
+	};
+	next_to = 'Тронный зал';
+}
+
+cutscene {
+	nam = 'badend4';
+	onenter = function()
+		pic_push '99'
+		disable 'королева'
+	end;
+	exit = function()
+		pic_pop()
+		enable 'королева'
+	end;
+	title = false;
+	text = {
+		[[-- Спасибо, дитя. Ты правильно сделала, что сама отдала мне {$fmt em|её} талисман. Это луче для нас обеих, всё закончится быстро...^^
 		И все сомнения вдруг уходят. Чувствуя в глубине ужас, ты поднимаешься по ступенькам пьедестала и обнимаешь свою мать.^^
 		От неё веет холодом, который сковывает тебя, и ты уже ничего не можешь изменить.^^
 		Ты смотришь внутрь черных дыр-глаз Снежной Королевы...^^
