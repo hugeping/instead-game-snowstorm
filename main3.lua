@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pacowacz$
---$Version:1.5$
+--$Version:1.6$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -329,6 +329,9 @@ function pl:before_LetGo(w, ww)
 			return
 		end
 		return false
+	elseif w ^ 'скрипка' and here() ^ 'пещера2' and mp:thedark() then
+		p [[Ты не хочешь расставаться со своей скрипкой.]]
+		return
 	elseif w ^ 'осколки' then
 		local s = w
 		if not here() ^ 'пещера2' then
