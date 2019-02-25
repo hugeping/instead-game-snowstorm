@@ -130,7 +130,7 @@ room {
 		if blizzard >= 2 then
 			blizzard = blizzard + 1
 			if blizzard < 7 and blizzard > 3 then
-				pic_set '2-pan'
+				pic_set '2-pan-left'
 			end
 			if blizzard > 5 then
 				enable '#заправка'
@@ -254,7 +254,7 @@ room {
 			end
 			p [[Ты видишь, как за стеклом кружится метель.]];
 			if s:once() then
-				pic_set '2-pan'
+				pic_set '2-pan-left'
 			end
 		end;
 	}:attr 'scenery,openable';

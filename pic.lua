@@ -58,6 +58,7 @@ global 'pictures' ({})
 local spr
 local spr_blank
 local spr_pos = 0
+local pan_left = false
 
 function game:timer()
 	if not spr then
@@ -70,7 +71,11 @@ function game:timer()
 		return false
 	end
 	spr_blank:fill('#ffffff')
-	spr:copy(spr_pos, 0, ww, hh, spr_blank)
+	if pan_left then
+		spr:copy(w - ww - spr_pos, 0, ww, hh, spr_blank)
+	else
+		spr:copy(spr_pos, 0, ww, hh, spr_blank)
+	end
 	if spr_pos < w - ww then
 		spr_pos = spr_pos + 1
 	end
@@ -88,16 +93,22 @@ game.pic = function(s)
 		if not spr then
 			instead.fading(true)
 			spr = sprite.new(p)
+			pan_left = not not p:find("left")
 			local w, h = spr:size()
 			local hh = tonumber(theme.get'scr.gfx.h')
 			spr = spr:scale(hh/h)
+			w, h = spr:size()
 			spr_pos = 0
 			timer:set(50)
 			if not spr_blank then
 				spr_blank = sprite.new(theme.get'scr.gfx.w', theme.get'scr.gfx.h')
 			end
 			local ww, hh = spr_blank:size()
-			spr:copy(0, 0, ww, hh, spr_blank)
+			if pan_left then
+				spr:copy(w - ww, 0, ww, hh, spr_blank)
+			else
+				spr:copy(0, 0, ww, hh, spr_blank)
+			end
 		end
 		return spr_blank
 	else
