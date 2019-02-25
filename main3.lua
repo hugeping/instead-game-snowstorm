@@ -1,5 +1,5 @@
 --$Name:Метель$
---$Author:Peter Kosyh & Pacowacz$
+--$Author:Peter Kosyh & Pakowacz$
 --$Version:1.6$
 require "mp-ru"
 require "fmt"
