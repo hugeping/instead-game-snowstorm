@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
---$Version:1.7$
+--$Version:1.8$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -351,11 +351,18 @@ function pl:before_LetGo(w, ww)
 	end;
 	return false
 end
+
+--"фонарик,фонарь"
+--"сообщения|сообщение"
+
 obj {
 	function(s)
 		pr (-"мобильный телефон,телефон,мобильник,смартфон");
 		if s.flash then
 			pr "|фонарик,фонарь"
+		end
+		if not s.seen then
+			pr "|сообщения|сообщение";
 		end
 	end;
 	nam = "телефон";
@@ -418,6 +425,10 @@ obj {
 		end
 		if s.compass then
 			p [[Если ты выключишь телефон, ты лишишься компаса.]]
+			return
+		end
+		if not s.seen then
+			p [[Ты не любишь, когда твой смартфон выключен.]]
 			return
 		end
 		return false
@@ -516,7 +527,7 @@ Verb {
 Verb {
 	'#Play';
 	'играть,сыграть',
-	'на {noun}/дт : Play',
+	'на {noun}/пр : Play',
 	' : Play',
 }
 
