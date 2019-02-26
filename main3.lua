@@ -2647,6 +2647,7 @@ room {
 		end;
 		before_Take = [[Зачем тебе это?]];
 		before_Attack = [[Ты не разобьешь их всех.]];
+		before_Touch = [[Ты коснулась одного из зеркал. Холодное.]];
 		['before_Push,Pull,Transfer'] = [[Стоит ли это делать?]];
 	}:attr 'scenery';
 	obj {
@@ -2808,7 +2809,7 @@ obj {
 		if seen 'королева2' then
 			p [[Твоя рука свободно проходит сквозь поверхность зеркала.]]
 		else
-			return false
+			p [[Какое оно холодное...]]
 		end
 	end;
 	before_Take = function(s)
