@@ -239,6 +239,9 @@ room {
 		before_Open = function(s)
 			mp:xaction("Exit")
 		end;
+		before_Enter = function(s)
+			mp:xaction("Exit")
+		end;
 		before_Close = [[Дверь закрыта.]];
 	};
 	Prop {
@@ -695,8 +698,15 @@ Title {
 }
 
 obj {
-	-"машина";
+	-"машина|дверь";
 	nam = 'машина';
+	description = function(s)
+		if s:multi_alias() == 2 then
+			p [[Тебе нет дела до двери.]]
+			return
+		end
+		return false
+	end;
 	dsc = function(s)
 		p [[В снегу стоит машина.]];
 		if _'перо':where() == s and _'перо':hasnt 'moved' then
@@ -886,6 +896,9 @@ Area {
 		nam = '#следы';
 		before_Exam = "Следы уже почти скрылись под свежим снегом.";
 	}:attr 'scenery';
+	Prop {
+		-"колёса|колесо|двери";
+	};
 }
 
 game:dict {
@@ -3331,6 +3344,12 @@ Verb {
 	"#SwitchOn2",
 	"завести/,завед/и",
 	"~ {noun}/вн :SwitchOn",
+}
+
+Verb {
+	"#WalkThrough",
+	"идти,иди",
+	"~ сквозь {noun}/вн,scene :Enter",
 }
 
 Verb {
