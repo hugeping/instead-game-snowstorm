@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
---$Version:1.91$
+--$Version:1.92$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
