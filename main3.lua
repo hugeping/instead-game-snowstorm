@@ -2730,7 +2730,7 @@ room {
 			before_Take = [[Это невозможно взять.]];
 			before_Default = function(s, ev, w)
 				if ev == 'ThrownAt' or ev == 'Receive' then
-					p ([[Тебе жаль расстоваться с ]], w:noun'тв', '.')
+					p ([[Тебе жаль расставаться с ]], w:noun'тв', '.')
 				else
 					p [[Как ты сделаешь это?]];
 				end
