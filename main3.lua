@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
---$Version:1.93$
+--$Version:1.95$
 require "mp-ru"
 require "fmt"
 fmt.dash = true
@@ -382,7 +382,7 @@ obj {
 		if s.flash then
 			pr "|фонарик,фонарь"
 		end
-		if not s.seen then
+		if have(s) and here() ^ 'В машине' then
 			pr "|сообщения|сообщение";
 		end
 	end;
