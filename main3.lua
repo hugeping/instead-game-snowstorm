@@ -1105,7 +1105,11 @@ Area {
 		before_Exam = "Снежное поле выглядит бескрайним.";
 		before_Default = [[Поле далеко.]];
 		['before_Walk,Enter,Climb'] = function(s)
-			walk 'поле'
+			if std.here().depth == 0 then
+				walk 'поле'
+			else
+				p [[Поле где-то на востоке.]]
+			end
 		end;
 	}:attr 'scenery';
 	Prop {
