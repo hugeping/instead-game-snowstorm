@@ -1105,7 +1105,7 @@ Area {
 		before_Exam = "Снежное поле выглядит бескрайним.";
 		before_Default = [[Поле далеко.]];
 		['before_Walk,Enter,Climb'] = function(s)
-			if std.here().depth == 0 then
+			if here().depth == 0 then
 				walk 'поле'
 			else
 				p [[Поле где-то на востоке.]]
