@@ -1,7 +1,7 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
 --$Version:1.95$
-require "mp-ru"
+require "parser/mp-ru"
 require "fmt"
 fmt.dash = true
 fmt.quotes = true
