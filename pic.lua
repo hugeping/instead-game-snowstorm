@@ -50,7 +50,50 @@ room {
 		snd.music 'mus/largo.ogg'
 	end;
 }
+if instead.tiny then
 
+global 'pictures' ({})
+game.gfx = function(s)
+	local top = #pictures
+	if top == 0 then
+		return false
+	end
+	if here():type'dlg' and here().__gfx == pictures[top] then
+		return
+	end
+	if here():type'dlg' then
+		here().__gfx = pictures[top]
+	end
+	return pictures[top]
+end
+
+function pic_push(name)
+	me():need_scene(true)
+	name = 'img/'..name .. '.jpg'
+	table.insert(pictures, name)
+end
+
+function pic_pop()
+	local top = #pictures
+	if top == 0 then
+		return
+	end
+	table.remove(pictures, top)
+end
+
+function pic_set(name)
+	local top = #pictures
+	if top == 0 then
+		return pic_push(name)
+	end
+	name = 'img/'..name .. '.jpg'
+	if pictures[top] == name then
+		return
+	end
+	me():need_scene(true)
+	pictures[top] = name
+end
+end
 else
 require "titles"
 global 'pictures' ({})
