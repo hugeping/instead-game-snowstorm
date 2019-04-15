@@ -6,7 +6,7 @@ require "fmt"
 fmt.dash = true
 fmt.quotes = true
 -- mp.errhints = false
-game.dsc = [[Простая игра написанная специально для ЗОК-2019.]]
+game.dsc = false; --[[Простая игра написанная специально для ЗОК-2019.]]
 
 function pic_push(name)
 end
