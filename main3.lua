@@ -700,6 +700,7 @@ Title {
 obj {
 	-"машина|дверь";
 	nam = 'машина';
+	inside_dsc = [[Ты находишься в машине.]];
 	description = function(s)
 		if s:multi_alias() == 2 then
 			p [[Тебе нет дела до двери.]]
