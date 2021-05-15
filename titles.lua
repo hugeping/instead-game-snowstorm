@@ -137,7 +137,7 @@ local titles = {
 	{"Движок:", style = 2},
 	{"INSTEAD3: МЕТАПАРСЕР3 // Пётр Косых"},
 	{ };
-	{"http://instead.syscall.ru"},
+	{"https://instead.hugeping.ru"},
 	{ };
 	{"Альфа тестирование:"},
 	{"techniX"},

@@ -1,6 +1,6 @@
 require "sprite"
 require "theme"
-require "click"
+-- require "click"
 loadmod "color2rgb"
 
 local function utf_ff(b, pos)
@@ -1017,9 +1017,9 @@ std.mod_start(
 				theme.restore(k)
 			end
 		end
-		theme.set('scr.gfx.scalable', 5)
+--		theme.set('scr.gfx.scalable', 5)
 		instead.wait_use(false)
-		instead.grab_events(true)
+--		instead.grab_events(true)
 		if load then
 			sprite.scr():fill(decor.bgcol)
 			decor:load()
@@ -1058,7 +1058,10 @@ function input:click(press, btn, x, y, px, py, ...)
 		end
 		return '@decor_click'.. (a or '')
 	end
-	return clickfn(input, press, btn, x, y, px, py, ...)
+	if clickfn then
+		return clickfn(input, press, btn, x, y, px, py, ...)
+	end
+	return false
 end
 
 function D(n)
