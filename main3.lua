@@ -616,7 +616,9 @@ Verb {
 	'настро/ить,настра/ивать',
 	'{noun}/вн : Tune',
 }
-
+function mp:Tune(w)
+	p ([[Тебе не нужно настраивать ]], w:noun 'вн', ".")
+end
 function mp:Photo()
 	if not have 'телефон' then
 		p [[Дебе нечем делать снимки.]];
