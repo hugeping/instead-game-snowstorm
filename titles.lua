@@ -5,27 +5,6 @@ require "decor"
 require "snd"
 --require "fading"
 
-obj {
-	nam = 'mplayer';
-	pos = 0;
-	{
-		playlist = {
-			'01.ogg';
---			'02.ogg';
-		}
-	};
-	life = function(s)
-		if snd.music_playing() then
-			return
-		end
-		s.pos = s.pos + 1
-		if s.pos > #s.playlist then
-			s.pos = 1
-		end
-		snd.music('mus/'..s.playlist[s.pos], 1);
-	end
-}
-
 declare 'flake' (function(v)
 	local sp = v.speed + rnd(2)
 	local sp2 = v.speed + rnd(4)

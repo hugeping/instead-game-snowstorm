@@ -1,6 +1,6 @@
 --$Name:Метель$
 --$Author:Peter Kosyh & Pakowacz$
---$Version:2.1$
+--$Version:2.2$
 require "parser/mp-ru"
 require "fmt"
 fmt.dash = true
@@ -647,7 +647,8 @@ function start(load)
 	end
 end
 function init()
-	if theme.name() == '.mobile' or theme.name() == '.mobile2' then
+	if not instead.tiny and (
+	  theme.name() == '.mobile' or theme.name() == '.mobile2') then
 		mp.togglehelp = true
 		mp.autohelp = true
 		mp.autohelp_limit = 1000
@@ -2918,7 +2919,7 @@ room {
 		if not w ^ 'скрипка' then
 			return false
 		end
-		if not instead.tiny then
+		if not instead.reinstead then
 			snd.music ('mus/violin.ogg', 1)
 		end
 		walk 'cry2'

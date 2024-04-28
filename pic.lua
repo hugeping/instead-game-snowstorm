@@ -1,7 +1,32 @@
+if not instead.reinstead then
 require "sprite"
 require "theme"
 require "snd"
-if not theme.name() or theme.name():find(".", 1, true) ~= 1 then
+
+obj {
+	nam = 'mplayer';
+	pos = 0;
+	{
+		playlist = {
+			'01.ogg';
+--			'02.ogg';
+		}
+	};
+	life = function(s)
+		if snd.music_playing() then
+			return
+		end
+		s.pos = s.pos + 1
+		if s.pos > #s.playlist then
+			s.pos = 1
+		end
+		snd.music('mus/'..s.playlist[s.pos], 1);
+	end
+}
+end
+
+if instead.tiny or
+  (not theme.name() or theme.name():find(".", 1, true) ~= 1) then
 	dprint "Disabling pictures"
 local titles = [[
 {$fmt c|{$fmt b|МЕТЕЛЬ}^^
@@ -47,7 +72,9 @@ room {
 	noparser = true;
 	enter = function(s)
 		pic_set '81'
-		snd.music 'mus/largo.ogg'
+		if not instead.reinstead then
+			snd.music 'mus/largo.ogg'
+		end
 	end;
 }
 if instead.tiny then
